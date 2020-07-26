@@ -1,0 +1,10 @@
+def getGitInfo() {
+
+}
+
+task writeTask {
+    doLast {
+        println("================END!!!==================")
+    }
+}
+
