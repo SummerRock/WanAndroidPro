@@ -1,5 +1,6 @@
 rootProject.name='My Application'
-include ':app'
+include ':app', ':mytestlibrary'
+
 gradle.addBuildListener(new BuildListener() {
 
     void buildStarted(Gradle var1) {
