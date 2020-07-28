@@ -33,29 +33,29 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
 
-task JsonChao
-JsonChao {
-    // 2、在 JsonChao task 闭包内输出 hello~，
+task HelloTask
+HelloTask {
+    // 2、在 HelloTask task 闭包内输出 hello~，
     // 执行在 gradle 生命周期的第二个阶段，即配置阶段。
     println("hello~")
     // 3、给 task 附带一些 执行动作（Action），执行在
     // gradle 生命周期的第三个阶段，即执行阶段。
     doFirst {
-        println("start")
+        println("HelloTask===> start")
     }
     doLast {
-        println("end")
+        println("HelloTask===> end")
     }
 }
 // 4、除了上述这种将声明与配置、Action 分别定义
 // 的方式之外，也可以直接将它们结合起来。
-// 这里我们又定义了一个 Android task，它依赖于 JsonChao
-// task，也就是说，必须先执行完 JsonChao task，才能
+// 这里我们又定义了一个 Android task，它依赖于 HelloTask
+// task，也就是说，必须先执行完 HelloTask task，才能
 // 去执行 Android task，由此，它们之间便组成了一个
-// 有向无环图：JsonChao task => Android task
-task Andorid(dependsOn:"JsonChao") {
+// 有向无环图：HelloTask task => Android task
+task AfterHello(dependsOn:"HelloTask") {
     doLast {
-        println("end?")
+        println("AfterHello===> end?")
     }
 }
 
@@ -104,8 +104,8 @@ myTask3.doFirst {
     println "This group is 1"
 }
 
-project.task('JsonChao3', group: "JsonChao", description: "my tasks",
-        dependsOn: ["JsonChao", "Andorid"] ).doLast {
+project.task('JsonChao3', group: "HelloTask", description: "my tasks",
+        dependsOn: ["HelloTask", "Andorid"] ).doLast {
     println "execute JsonChao3 Task"
 }
 
