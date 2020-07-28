@@ -1,13 +1,13 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
-buildscript {
+buildscript { // 配置脚本的 classpath
     
-    repositories {
+    repositories { // 项目的仓库地址，会按顺序依次查找
         google()
         jcenter()
         
     }
-    dependencies {
+    dependencies { // 项目的依赖
         classpath 'com.android.tools.build:gradle:3.6.4'
         
 
@@ -16,7 +16,7 @@ buildscript {
     }
 }
 
-allprojects {
+allprojects { // 子项目的配置
     repositories {
         google()
         jcenter()

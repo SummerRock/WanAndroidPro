@@ -1,10 +1,10 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.application' // 引入 android gradle 插件
 
-android {
+android { // 配置 android gradle plugin 需要的内容
     compileSdkVersion 28
 
 
-    defaultConfig {
+    defaultConfig { // 版本，applicationId 等配置
         applicationId "com.example.myapplication"
         minSdkVersion 19
         targetSdkVersion 28
@@ -12,6 +12,11 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    compileOptions { // 指定 java 版本
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
     }
 
     buildTypes {
@@ -32,7 +37,7 @@ android {
 
 }
 
-dependencies {
+dependencies { // 项目需要的依赖
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
