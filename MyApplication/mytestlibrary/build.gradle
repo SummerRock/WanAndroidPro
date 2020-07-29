@@ -104,18 +104,18 @@ myTask3.doFirst {
     println "This group is 1"
 }
 
-project.task('JsonChao3', group: "HelloTask", description: "my tasks",
-        dependsOn: ["HelloTask", "Andorid"] ).doLast {
-    println "execute JsonChao3 Task"
+project.task('FinalTask03', group: "HelloTask", description: "my tasks",
+        dependsOn: ["HelloTask", "AfterHello"] ).doLast {
+    println "execute FinalTask03 Task"
 }
 
 project.afterEvaluate {
 
     def buildTask = project.tasks.getByName('help') // 执行build任务时，最后一个被执行的Task
-//    buildTask.doLast {
-//        println "help done!!!"
-////        writeTask.execute()
-//    }
+    buildTask.doLast {
+        println "help task done!!!"
+//        writeTask.execute()
+    }
     //Gradle 5.0后execute()被删除了 所以使用finalizedBy
     buildTask.finalizedBy "writeTask"
 }

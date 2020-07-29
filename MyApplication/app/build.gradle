@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application' // 引入 android gradle 插件
+//使用插件
+apply plugin: CustomPlugin
 
 android { // 配置 android gradle plugin 需要的内容
     compileSdkVersion 28
@@ -45,4 +47,19 @@ dependencies { // 项目需要的依赖
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    //依赖本地library
+    implementation project(path: ':mytestlibrary')
+}
+
+//自定义插件：实现Plugin类接口，重写apply方法 ./gradlew CustomPlugin来运行
+class CustomPlugin implements Plugin<Project> {
+    @Override
+    void apply(Project project) {
+        project.task('CustomPluginTask') {
+            doLast {
+                println "大家好,我是一个自定义插件，在这里写下你的具体功能"
+            }
+        }
+    }
 }
