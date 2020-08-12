@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application' // 引入 android gradle 插件
 //使用插件
 apply plugin: CustomPlugin
+apply plugin: 'com.demo.plugin'
 
 android { // 配置 android gradle plugin 需要的内容
     compileSdkVersion 28
