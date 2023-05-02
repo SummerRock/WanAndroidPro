@@ -18,5 +18,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void showToast(View view) {
         Toast.makeText(this, CommonUtils.getString(), Toast.LENGTH_LONG).show();
+        throw new IllegalArgumentException("Test Crash");
     }
 }
