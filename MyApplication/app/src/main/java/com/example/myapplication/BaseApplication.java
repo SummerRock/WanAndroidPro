@@ -6,6 +6,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
+import com.example.myapplication.main.MainActivity;
+
 public class BaseApplication extends Application implements Thread.UncaughtExceptionHandler {
     @Override
     public void onCreate() {

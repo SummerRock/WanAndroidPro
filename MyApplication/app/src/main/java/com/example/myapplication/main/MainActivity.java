@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.common.test.CommonUtils;
+import com.example.myapplication.R;
 
 public class MainActivity extends AppCompatActivity {
 
