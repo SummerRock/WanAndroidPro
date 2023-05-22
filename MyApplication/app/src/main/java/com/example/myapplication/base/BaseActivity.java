@@ -5,8 +5,8 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModel;
 
-public abstract class BaseActivity extends AppCompatActivity {
-    protected ViewModel viewModel;
+public abstract class BaseActivity<VM extends ViewModel> extends AppCompatActivity {
+    protected VM viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,5 +24,5 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract int getLayoutResourceId();
 
     // 创建 ViewModel
-    protected abstract ViewModel createViewModel();
+    protected abstract VM createViewModel();
 }
