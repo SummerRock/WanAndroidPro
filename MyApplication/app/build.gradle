@@ -4,13 +4,13 @@ apply plugin: CustomPlugin
 apply plugin: 'com.demo.plugin'
 
 android { // 配置 android gradle plugin 需要的内容
-    compileSdkVersion 28
+    compileSdkVersion 31
 
 
     defaultConfig { // 版本，applicationId 等配置
         applicationId "com.example.myapplication"
-        minSdkVersion 19
-        targetSdkVersion 28
+        minSdkVersion 21
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
 
@@ -37,6 +37,9 @@ android { // 配置 android gradle plugin 需要的内容
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    viewBinding {
+        enabled true
+    }
 
 }
 
@@ -45,6 +48,12 @@ dependencies { // 项目需要的依赖
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'com.google.android.material:material:1.4.+'
+    implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
+    implementation 'androidx.navigation:navigation-fragment:2.5.2'
+    implementation 'androidx.navigation:navigation-ui:2.5.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
