@@ -5,18 +5,23 @@ import androidx.annotation.Nullable;
 public class NetworkModel<T> {
 
     private static final String TAG = "Resource";
+    private static final int DEFAULT_CODE = 0;
 
-    public final String message;
-    public final long code;
+    public String errorMsg;
+    public int errorCode;
     @Nullable
-    public final T data;
-    public final NetStatus netStatus;
+    public T data;
+    public NetStatus netStatus;
 
-    private NetworkModel(NetStatus netStatus, @Nullable T data, String message, long code) {
+    private NetworkModel(NetStatus netStatus, @Nullable T data, String message, int errorCode) {
         this.netStatus = netStatus;
         this.data = data;
-        this.message = message;
-        this.code = code;
+        this.errorMsg = message;
+        this.errorCode = errorCode;
+    }
+
+    public static <T> NetworkModel<T> loading() {
+        return new NetworkModel<>(NetStatus.LOADING, null, null, DEFAULT_CODE);
     }
 
     public enum NetStatus {
