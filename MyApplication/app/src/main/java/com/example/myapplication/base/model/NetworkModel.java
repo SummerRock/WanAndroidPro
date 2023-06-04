@@ -24,6 +24,10 @@ public class NetworkModel<T> {
         return new NetworkModel<>(NetStatus.LOADING, null, null, DEFAULT_CODE);
     }
 
+    public static <T> NetworkModel<T> failed(String message, int errorCode) {
+        return new NetworkModel<>(NetStatus.ERROR, null, message, errorCode);
+    }
+
     public enum NetStatus {
         SUCCESS,
         ERROR,

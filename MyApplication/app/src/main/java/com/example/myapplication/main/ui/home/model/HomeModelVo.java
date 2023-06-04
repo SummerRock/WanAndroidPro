@@ -21,6 +21,34 @@ public class HomeModelVo {
     @SerializedName("total")
     private Integer total;
 
+    public Integer getCurPage() {
+        return curPage;
+    }
+
+    public List<DatasDTO> getDatas() {
+        return datas;
+    }
+
+    public Integer getOffset() {
+        return offset;
+    }
+
+    public Boolean getOver() {
+        return over;
+    }
+
+    public Integer getPageCount() {
+        return pageCount;
+    }
+
+    public Integer getSize() {
+        return size;
+    }
+
+    public Integer getTotal() {
+        return total;
+    }
+
     public static class DatasDTO {
         @SerializedName("adminAdd")
         private Boolean adminAdd;

@@ -2,6 +2,7 @@ package com.example.myapplication.main.ui.home;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.myapplication.base.model.NetworkModel;
@@ -34,13 +35,17 @@ public class HomeDataRepository {
         liveData.setValue(NetworkModel.loading());
         homeService.getHomeMainData(pageIndex).enqueue(new Callback<NetworkModel<HomeModelVo>>() {
             @Override
-            public void onResponse(Call<NetworkModel<HomeModelVo>> call, Response<NetworkModel<HomeModelVo>> response) {
-                liveData.setValue(response.body());
+            public void onResponse(@NonNull Call<NetworkModel<HomeModelVo>> call, @NonNull Response<NetworkModel<HomeModelVo>> response) {
+                if (response.isSuccessful()) {
+                    liveData.setValue(response.body());
+                } else {
+                    liveData.setValue(NetworkModel.failed(response.message(), response.code()));
+                }
             }
 
             @Override
-            public void onFailure(Call<NetworkModel<HomeModelVo>> call, Throwable t) {
-
+            public void onFailure(@NonNull Call<NetworkModel<HomeModelVo>> call, @NonNull Throwable t) {
+                liveData.setValue(NetworkModel.failed(t.getMessage(), -1));
             }
         });
         return liveData;
