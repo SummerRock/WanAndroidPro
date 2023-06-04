@@ -1,37 +1,24 @@
 package com.example.myapplication.main.ui.home;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
+import com.example.myapplication.R;
+import com.example.myapplication.base.fragment.BaseFragment;
 
-import com.example.myapplication.databinding.FragmentHomeBinding;
-
-public class HomeFragment extends Fragment {
-
-    private FragmentHomeBinding binding;
-
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
-
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-
-        final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-        return root;
+public class HomeFragment extends BaseFragment<HomeViewModel> {
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_home;
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+    protected Class<HomeViewModel> getViewModelClass() {
+        return HomeViewModel.class;
+    }
+
+    @Override
+    protected void performAction() {
+        final TextView textView = rootView.findViewById(R.id.text_home);
+        viewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
     }
 }

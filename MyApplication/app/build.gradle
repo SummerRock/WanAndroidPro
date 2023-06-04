@@ -18,7 +18,7 @@ android { // 配置 android gradle plugin 需要的内容
     }
 
     dataBinding {
-        enabled = true
+        enabled = false
     }
 
     compileOptions { // 指定 java 版本
