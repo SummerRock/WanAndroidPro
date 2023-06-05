@@ -18,7 +18,7 @@ android { // 配置 android gradle plugin 需要的内容
     }
 
     dataBinding {
-        enabled = false
+        enabled = true
     }
 
     compileOptions { // 指定 java 版本
@@ -58,7 +58,7 @@ dependencies { // 项目需要的依赖
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
     implementation 'androidx.navigation:navigation-fragment:2.5.2'
     implementation 'androidx.navigation:navigation-ui:2.5.2'
-    implementation 'androidx.databinding:databinding-runtime:8.0.2'
+    implementation 'androidx.databinding:databinding-runtime:4.2.0'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0' // 如果需要使用 Gson 进行数据转换
     testImplementation 'junit:junit:4.12'
