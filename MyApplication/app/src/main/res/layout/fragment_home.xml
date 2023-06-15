@@ -4,6 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/home_frag_swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/home_frag_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
     <TextView
         android:id="@+id/text_home"
         android:layout_width="match_parent"

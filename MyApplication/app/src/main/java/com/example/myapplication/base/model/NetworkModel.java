@@ -11,13 +11,25 @@ public class NetworkModel<T> {
     public int errorCode;
     @Nullable
     public T data;
-    public NetStatus netStatus;
+    private NetStatus netStatus;
 
     private NetworkModel(NetStatus netStatus, @Nullable T data, String message, int errorCode) {
         this.netStatus = netStatus;
         this.data = data;
         this.errorMsg = message;
         this.errorCode = errorCode;
+    }
+
+    public NetStatus getNetStatus() {
+        if (netStatus == null) {
+            if (data != null) {
+                return NetStatus.SUCCESS;
+            } else {
+                return NetStatus.ERROR;
+            }
+        } else {
+            return netStatus;
+        }
     }
 
     public static <T> NetworkModel<T> loading() {
