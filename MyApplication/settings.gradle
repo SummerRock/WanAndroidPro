@@ -1,5 +1,5 @@
 rootProject.name='My Application'
-include ':app', ':mytestlibrary'
+include ':app', ':commonmodule'
 // 如果想指定子模块的位置，可以使用 project 方法获取 Project 对象，设置其 projectDir 参数
 // project(':app').projectDir = new File('./app')
 
