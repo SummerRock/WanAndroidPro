@@ -1,4 +1,4 @@
-package com.common.test;
+package com.common.mainModule;
 
 public class CommonUtils {
 

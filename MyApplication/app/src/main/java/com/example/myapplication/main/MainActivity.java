@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.common.test.CommonUtils;
+import com.common.mainModule.CommonUtils;
 import com.example.myapplication.R;
 import com.example.myapplication.base.BaseActivity;
 

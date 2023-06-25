@@ -14,8 +14,11 @@ import com.example.myapplication.base.fragment.BaseFragment;
 import com.example.myapplication.base.model.NetworkModel;
 import com.example.myapplication.databinding.FragmentHomeBinding;
 import com.example.myapplication.main.ui.home.model.HomeModelVo;
+import com.example.myapplication.main.ui.home.view.HomeListAdapter;
 
 public class HomeFragment extends BaseFragment<HomeViewModel, FragmentHomeBinding> {
+    private HomeListAdapter listAdapter;
+
     @Override
     protected Class<HomeViewModel> getViewModelClass() {
         return HomeViewModel.class;
@@ -28,22 +31,23 @@ public class HomeFragment extends BaseFragment<HomeViewModel, FragmentHomeBindin
 
     @Override
     protected void performAction() {
-        final TextView textView = binding.textHome;
         final SwipeRefreshLayout swipeRefreshLayout = binding.homeFragSwipeRefreshLayout;
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Log.i("", "");
+                viewModel.triggerHomeData(0);
             }
         });
         final RecyclerView recyclerView = binding.homeFragRv;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        viewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        listAdapter = new HomeListAdapter(null);
+        recyclerView.setAdapter(listAdapter);
         viewModel.triggerHomeData(0);
-        viewModel.getLiveData().observe(getViewLifecycleOwner(), new Observer<NetworkModel<HomeModelVo>>() {
-            @Override
-            public void onChanged(NetworkModel<HomeModelVo> homeModelVoNetworkModel) {
-                textView.setText(homeModelVoNetworkModel.getNetStatus().toString());
+        viewModel.getLiveData().observe(getViewLifecycleOwner(), homeModelVoNetworkModel -> {
+            if (homeModelVoNetworkModel.getNetStatus().equals(NetworkModel.NetStatus.SUCCESS)
+                    && homeModelVoNetworkModel.data != null) {
+                swipeRefreshLayout.setRefreshing(false);
+                listAdapter.setData(homeModelVoNetworkModel.data.getDatas());
             }
         });
     }

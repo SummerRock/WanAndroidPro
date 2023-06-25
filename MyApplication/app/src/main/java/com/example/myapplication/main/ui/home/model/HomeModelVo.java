@@ -120,5 +120,141 @@ public class HomeModelVo {
         private Integer visible;
         @SerializedName("zan")
         private Integer zan;
+
+        public Boolean getAdminAdd() {
+            return adminAdd;
+        }
+
+        public String getLink() {
+            return link;
+        }
+
+        public String getNiceDate() {
+            return niceDate;
+        }
+
+        public String getNiceShareDate() {
+            return niceShareDate;
+        }
+
+        public String getOrigin() {
+            return origin;
+        }
+
+        public String getPrefix() {
+            return prefix;
+        }
+
+        public String getProjectLink() {
+            return projectLink;
+        }
+
+        public Long getPublishTime() {
+            return publishTime;
+        }
+
+        public Integer getRealSuperChapterId() {
+            return realSuperChapterId;
+        }
+
+        public Integer getSelfVisible() {
+            return selfVisible;
+        }
+
+        public Long getShareDate() {
+            return shareDate;
+        }
+
+        public String getShareUser() {
+            return shareUser;
+        }
+
+        public Integer getSuperChapterId() {
+            return superChapterId;
+        }
+
+        public String getSuperChapterName() {
+            return superChapterName;
+        }
+
+        public List<?> getTags() {
+            return tags;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public Integer getType() {
+            return type;
+        }
+
+        public Integer getUserId() {
+            return userId;
+        }
+
+        public Integer getVisible() {
+            return visible;
+        }
+
+        public Integer getZan() {
+            return zan;
+        }
+
+        public String getApkLink() {
+            return apkLink;
+        }
+
+        public Integer getAudit() {
+            return audit;
+        }
+
+        public String getAuthor() {
+            return author;
+        }
+
+        public Boolean getCanEdit() {
+            return canEdit;
+        }
+
+        public Integer getChapterId() {
+            return chapterId;
+        }
+
+        public String getChapterName() {
+            return chapterName;
+        }
+
+        public Boolean getCollect() {
+            return collect;
+        }
+
+        public Integer getCourseId() {
+            return courseId;
+        }
+
+        public String getDesc() {
+            return desc;
+        }
+
+        public String getDescMd() {
+            return descMd;
+        }
+
+        public String getEnvelopePic() {
+            return envelopePic;
+        }
+
+        public Boolean getFresh() {
+            return fresh;
+        }
+
+        public String getHost() {
+            return host;
+        }
+
+        public Integer getId() {
+            return id;
+        }
     }
 }
