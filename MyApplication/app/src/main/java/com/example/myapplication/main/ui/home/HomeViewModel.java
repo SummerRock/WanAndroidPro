@@ -20,6 +20,10 @@ public class HomeViewModel extends ViewModel {
         mText.setValue("This is home fragment");
     }
 
+    public MutableLiveData<Integer> getMutableLiveData() {
+        return mutableLiveData;
+    }
+
     public void triggerHomeData(int pageIndex) {
         mutableLiveData.setValue(pageIndex);
     }

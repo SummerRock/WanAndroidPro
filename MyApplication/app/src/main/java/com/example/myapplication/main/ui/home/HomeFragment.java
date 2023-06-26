@@ -3,18 +3,22 @@ package com.example.myapplication.main.ui.home;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import androidx.lifecycle.Observer;
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.myapplication.R;
 import com.example.myapplication.base.fragment.BaseFragment;
 import com.example.myapplication.base.model.NetworkModel;
 import com.example.myapplication.databinding.FragmentHomeBinding;
-import com.example.myapplication.main.ui.home.model.HomeModelVo;
 import com.example.myapplication.main.ui.home.view.HomeListAdapter;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 public class HomeFragment extends BaseFragment<HomeViewModel, FragmentHomeBinding> {
     private HomeListAdapter listAdapter;
@@ -31,23 +35,39 @@ public class HomeFragment extends BaseFragment<HomeViewModel, FragmentHomeBindin
 
     @Override
     protected void performAction() {
-        final SwipeRefreshLayout swipeRefreshLayout = binding.homeFragSwipeRefreshLayout;
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        final SmartRefreshLayout refreshLayout = binding.homeFragRefreshLayout;
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh() {
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 viewModel.triggerHomeData(0);
             }
         });
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                int currentIndex = viewModel.getMutableLiveData().getValue();
+                viewModel.triggerHomeData(++currentIndex);
+            }
+        });
         final RecyclerView recyclerView = binding.homeFragRv;
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+        // 创建分割线对象
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(requireContext(), LinearLayoutManager.HORIZONTAL);
+        // 设置分割线样式和颜色（可选）
+        dividerItemDecoration.setDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.divider));
+        // 将分割线添加到RecyclerView
+        recyclerView.addItemDecoration(dividerItemDecoration);
+
         listAdapter = new HomeListAdapter(null);
         recyclerView.setAdapter(listAdapter);
         viewModel.triggerHomeData(0);
         viewModel.getLiveData().observe(getViewLifecycleOwner(), homeModelVoNetworkModel -> {
             if (homeModelVoNetworkModel.getNetStatus().equals(NetworkModel.NetStatus.SUCCESS)
                     && homeModelVoNetworkModel.data != null) {
-                swipeRefreshLayout.setRefreshing(false);
+                refreshLayout.finishRefresh();
+                refreshLayout.finishLoadMore();
                 listAdapter.setData(homeModelVoNetworkModel.data.getDatas());
+                refreshLayout.setEnableLoadMore(!homeModelVoNetworkModel.data.getOver());
             }
         });
     }

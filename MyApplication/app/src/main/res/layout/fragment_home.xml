@@ -4,16 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/home_frag_swipeRefreshLayout"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/home_frag_refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:srlEnableLoadMore="true"
+        app:srlEnableRefresh="true">
 
+        <!-- 添加你的列表控件（如RecyclerView或ListView） -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/home_frag_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
