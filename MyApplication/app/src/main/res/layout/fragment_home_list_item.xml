@@ -3,15 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="80dp"
+    android:paddingHorizontal="12dp"
+    android:paddingVertical="10dp">
 
     <TextView
         android:id="@+id/home_fg_item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:lines="1"
         android:textColor="@android:color/black"
-        android:textSize="20sp"
+        android:textSize="17sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="每日一问" />
+        tools:text="遇到Android12系统上的一个" />
+
+    <TextView
+        android:id="@+id/home_fg_item_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_fg_item_title"
+        tools:text="鸿洋" />
 </androidx.constraintlayout.widget.ConstraintLayout>

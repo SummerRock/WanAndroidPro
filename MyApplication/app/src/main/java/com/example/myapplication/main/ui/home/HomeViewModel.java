@@ -1,5 +1,6 @@
 package com.example.myapplication.main.ui.home;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
@@ -20,6 +21,7 @@ public class HomeViewModel extends ViewModel {
         mText.setValue("This is home fragment");
     }
 
+    @NonNull
     public MutableLiveData<Integer> getMutableLiveData() {
         return mutableLiveData;
     }
