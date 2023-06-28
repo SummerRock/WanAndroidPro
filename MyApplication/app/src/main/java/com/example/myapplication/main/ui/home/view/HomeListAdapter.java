@@ -6,26 +6,21 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.common.List.CollectionUtils;
 import com.common.mainModule.TextTools;
 import com.example.myapplication.R;
+import com.example.myapplication.base.view.BaseListAdapter;
 import com.example.myapplication.main.ui.home.model.HomeModelVo;
 
 import java.util.List;
 
-public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHolder> {
+public class HomeListAdapter extends BaseListAdapter<HomeListAdapter.ViewHolder, HomeModelVo.DatasDTO> {
 
-    private List<HomeModelVo.DatasDTO> data;
-
-    public HomeListAdapter(List<HomeModelVo.DatasDTO> data) {
-        this.data = data;
-    }
-
-    public void setData(List<HomeModelVo.DatasDTO> data) {
-        this.data = data;
-        notifyDataSetChanged();
+    public HomeListAdapter(@Nullable List<HomeModelVo.DatasDTO> list) {
+        super(list);
     }
 
     @NonNull
@@ -40,11 +35,6 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
         HomeModelVo.DatasDTO datasDTO = data.get(position);
         holder.title.setText(datasDTO.getTitle());
         holder.author.setText(TextTools.getStringWithDefaultValue(datasDTO.getAuthor(), "佚名"));
-    }
-
-    @Override
-    public int getItemCount() {
-        return CollectionUtils.getListSize(data);
     }
 
     // 自定义ViewHolder类

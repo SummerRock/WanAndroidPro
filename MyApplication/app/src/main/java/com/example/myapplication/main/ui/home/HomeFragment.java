@@ -1,6 +1,5 @@
 package com.example.myapplication.main.ui.home;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -15,11 +14,14 @@ import com.example.myapplication.databinding.FragmentHomeBinding;
 import com.example.myapplication.main.ui.home.view.HomeListAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+
 public class HomeFragment extends BaseFragment<HomeViewModel, FragmentHomeBinding> {
-    private HomeListAdapter listAdapter;
+
+    private final HomeListAdapter listAdapter = new HomeListAdapter(null);
 
     @Override
     protected Class<HomeViewModel> getViewModelClass() {
@@ -34,6 +36,7 @@ public class HomeFragment extends BaseFragment<HomeViewModel, FragmentHomeBindin
     @Override
     protected void performAction() {
         final SmartRefreshLayout refreshLayout = binding.homeFragRefreshLayout;
+        refreshLayout.setRefreshFooter(new ClassicsFooter(requireContext()));
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
@@ -56,7 +59,6 @@ public class HomeFragment extends BaseFragment<HomeViewModel, FragmentHomeBindin
         // 将分割线添加到RecyclerView
         recyclerView.addItemDecoration(dividerItemDecoration);
 
-        listAdapter = new HomeListAdapter(null);
         recyclerView.setAdapter(listAdapter);
         viewModel.triggerHomeData(0);
         viewModel.getLiveData().observe(getViewLifecycleOwner(), homeModelVoNetworkModel -> {
@@ -64,7 +66,11 @@ public class HomeFragment extends BaseFragment<HomeViewModel, FragmentHomeBindin
                     && homeModelVoNetworkModel.data != null) {
                 refreshLayout.finishRefresh();
                 refreshLayout.finishLoadMore();
-                listAdapter.setData(homeModelVoNetworkModel.data.getDatas());
+                if (homeModelVoNetworkModel.data.getCurPage() == 1) {
+                    listAdapter.refreshData(homeModelVoNetworkModel.data.getDatas());
+                } else {
+                    listAdapter.addData(homeModelVoNetworkModel.data.getDatas());
+                }
                 refreshLayout.setEnableLoadMore(!homeModelVoNetworkModel.data.getOver());
             }
         });
