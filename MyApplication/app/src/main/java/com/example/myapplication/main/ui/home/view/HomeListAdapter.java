@@ -9,7 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.common.List.CollectionUtils;
+import com.common.mainModule.ContextUtils;
+import com.common.mainModule.RouterUtils;
 import com.common.mainModule.TextTools;
 import com.example.myapplication.R;
 import com.example.myapplication.base.view.BaseListAdapter;
@@ -35,6 +36,7 @@ public class HomeListAdapter extends BaseListAdapter<HomeListAdapter.ViewHolder,
         HomeModelVo.DatasDTO datasDTO = data.get(position);
         holder.title.setText(datasDTO.getTitle());
         holder.author.setText(TextTools.getStringWithDefaultValue(datasDTO.getAuthor(), "佚名"));
+        holder.itemView.setOnClickListener(view -> RouterUtils.jumpScheme(datasDTO.getLink(), ContextUtils.getActivityFromView(holder.itemView)));
     }
 
     // 自定义ViewHolder类

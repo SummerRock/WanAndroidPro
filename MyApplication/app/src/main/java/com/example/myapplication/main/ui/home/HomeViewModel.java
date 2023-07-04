@@ -11,14 +11,11 @@ import com.example.myapplication.main.ui.home.model.HomeModelVo;
 
 public class HomeViewModel extends ViewModel {
 
-    private final MutableLiveData<String> mText;
     private final MutableLiveData<Integer> mutableLiveData = new MutableLiveData<>();
     private final LiveData<NetworkModel<HomeModelVo>> liveData;
 
     public HomeViewModel() {
-        mText = new MutableLiveData<>();
         liveData = Transformations.switchMap(mutableLiveData, input -> HomeDataRepository.getInstance().queryHomeData(mutableLiveData.getValue()));
-        mText.setValue("This is home fragment");
     }
 
     @NonNull
@@ -32,9 +29,5 @@ public class HomeViewModel extends ViewModel {
 
     public LiveData<NetworkModel<HomeModelVo>> getLiveData() {
         return liveData;
-    }
-
-    public LiveData<String> getText() {
-        return mText;
     }
 }
