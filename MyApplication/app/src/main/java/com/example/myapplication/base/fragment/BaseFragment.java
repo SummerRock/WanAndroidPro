@@ -13,6 +13,9 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewbinding.ViewBinding;
 
+import com.common.mainModule.LogUtils;
+import com.example.myapplication.base.view.BaseMultiStateView;
+
 public abstract class BaseFragment<V extends ViewModel, VB extends ViewBinding> extends Fragment {
     protected V viewModel;
 
@@ -22,11 +25,20 @@ public abstract class BaseFragment<V extends ViewModel, VB extends ViewBinding> 
 
     protected abstract VB getBinding(LayoutInflater inflater, ViewGroup container);
 
+    protected BaseMultiStateView baseMultiStateView;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = getBinding(inflater, container);
-        return binding.getRoot();
+        View base = binding.getRoot();
+        if (base instanceof ViewGroup) {
+            baseMultiStateView = new BaseMultiStateView(requireContext());
+            ((ViewGroup) base).addView(baseMultiStateView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        } else {
+            LogUtils.w("wrong view type");
+        }
+        return base;
     }
 
     @Override
