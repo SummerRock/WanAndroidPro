@@ -8,4 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <declare-styleable name="BaseMultiStateView">
+        <attr name="common_title_text" format="string"/>
+        <attr name="common_detail_text" format="string"/>
+        <attr name="common_network_top_image" format="reference"/>
+        <attr name="common_system_top_image" format="reference"/>
+    </declare-styleable>
 </resources>
