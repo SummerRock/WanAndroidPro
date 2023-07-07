@@ -1,13 +1,12 @@
 apply plugin: 'com.android.library'
-apply from: this.project.file("releaseinfo.gradle")
+apply from: this.project.file('../config.gradle')
 
 android {
     compileSdkVersion 31
 
-
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 31
+        minSdkVersion this.project.ext.minSdkVersion
+        targetSdkVersion this.project.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
 
@@ -31,91 +30,4 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-}
-
-task HelloTask
-HelloTask {
-    // 2、在 HelloTask task 闭包内输出 hello~，
-    // 执行在 gradle 生命周期的第二个阶段，即配置阶段。
-    println("hello~")
-    // 3、给 task 附带一些 执行动作（Action），执行在
-    // gradle 生命周期的第三个阶段，即执行阶段。
-    doFirst {
-        println("HelloTask===> start")
-    }
-    doLast {
-        println("HelloTask===> end")
-    }
-}
-// 4、除了上述这种将声明与配置、Action 分别定义
-// 的方式之外，也可以直接将它们结合起来。
-// 这里我们又定义了一个 Android task，它依赖于 HelloTask
-// task，也就是说，必须先执行完 HelloTask task，才能
-// 去执行 Android task，由此，它们之间便组成了一个
-// 有向无环图：HelloTask task => Android task
-task AfterHello(dependsOn:"HelloTask") {
-    doLast {
-        println("AfterHello===> end?")
-    }
-}
-
-// Task 定义方式1：直接通过 task 函数去创建（在 "()" 可以不指定 group 与 description 属性）
-task myTask1(group: "MyTask", description: "task1") {
-    println "This is myTask1"
-}
-
-// Task 定义方式2：通过 TaskContainer 去创建 task
-this.tasks.create(name: "myTask2") {
-    setGroup("MyTask")
-    setDescription("task2")
-    println "This is myTask2"
-}
-
-task Gradle_First() {
-    ext.good = true
-}
-
-task Gradle_Last() {
-    doFirst {
-        println Gradle_First.good
-    }
-    doLast {
-        println "I am not $Gradle_First.name"
-    }
-}
-
-// 使用 Task 在执行阶段进行操作
-task myTask3(group: "MyTask", description: "task3") {
-    println "This is myTask3"
-    doFirst {
-        // 老二
-        println "This group is 2"
-    }
-
-    doLast {
-        // 老三
-        println "This description is 3"
-    }
-}
-
-// 也可以使用 taskName.doxxx 的方式添加执行任务
-myTask3.doFirst {
-    // 这种方式的最先执行 => 老大
-    println "This group is 1"
-}
-
-project.task('FinalTask03', group: "HelloTask", description: "my tasks",
-        dependsOn: ["HelloTask", "AfterHello"] ).doLast {
-    println "execute FinalTask03 Task"
-}
-
-project.afterEvaluate {
-
-    def buildTask = project.tasks.getByName('help') // 执行build任务时，最后一个被执行的Task
-    buildTask.doLast {
-        println "help task done!!!"
-//        writeTask.execute()
-    }
-    //Gradle 5.0后execute()被删除了 所以使用finalizedBy
-    buildTask.finalizedBy "writeTask"
 }
