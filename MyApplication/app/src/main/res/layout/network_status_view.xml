@@ -12,6 +12,7 @@
         android:layout_width="34dp"
         android:layout_height="34dp"
         android:indeterminateDrawable="@drawable/base_multi_state_loading_progress_rotate"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

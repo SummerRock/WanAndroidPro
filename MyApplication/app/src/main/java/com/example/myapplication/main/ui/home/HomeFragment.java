@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.base.fragment.BaseFragment;
 import com.example.myapplication.base.model.NetworkModel;
+import com.example.myapplication.base.view.BaseMultiStateConstant;
 import com.example.myapplication.databinding.FragmentHomeBinding;
 import com.example.myapplication.main.ui.home.view.HomeListAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -72,6 +73,13 @@ public class HomeFragment extends BaseFragment<HomeViewModel, FragmentHomeBindin
                     listAdapter.addData(homeModelVoNetworkModel.data.getDatas());
                 }
                 refreshLayout.setEnableLoadMore(!homeModelVoNetworkModel.data.getOver());
+                changeInnerStatus(BaseMultiStateConstant.hide);
+            } else if (homeModelVoNetworkModel.getNetStatus().equals(NetworkModel.NetStatus.LOADING)) {
+                if (listAdapter.getItemCount() == 0) {
+                    changeInnerStatus(BaseMultiStateConstant.Loading);
+                }
+            } else {
+                changeInnerStatus(BaseMultiStateConstant.NetworkFail);
             }
         });
     }

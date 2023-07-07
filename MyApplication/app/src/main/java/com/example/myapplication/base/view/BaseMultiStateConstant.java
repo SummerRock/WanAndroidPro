@@ -5,4 +5,6 @@ public @interface BaseMultiStateConstant {
     int NetworkFail = 1;
     int SystemError = 2;
     int ShowEmptyText = 3;
+
+    int hide = 4;
 }

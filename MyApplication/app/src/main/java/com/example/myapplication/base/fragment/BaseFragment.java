@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.viewbinding.ViewBinding;
 
 import com.common.mainModule.LogUtils;
+import com.example.myapplication.base.view.BaseMultiStateConstant;
 import com.example.myapplication.base.view.BaseMultiStateView;
 
 public abstract class BaseFragment<V extends ViewModel, VB extends ViewBinding> extends Fragment {
@@ -26,6 +27,12 @@ public abstract class BaseFragment<V extends ViewModel, VB extends ViewBinding> 
     protected abstract VB getBinding(LayoutInflater inflater, ViewGroup container);
 
     protected BaseMultiStateView baseMultiStateView;
+
+    protected void changeInnerStatus(@BaseMultiStateConstant int state) {
+        if (baseMultiStateView != null) {
+            baseMultiStateView.show(state);
+        }
+    }
 
     @Nullable
     @Override

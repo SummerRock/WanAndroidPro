@@ -109,6 +109,10 @@ public class BaseMultiStateView extends ConstraintLayout {
      * 用于显示emptyView的不同状态
      */
     public void show(@BaseMultiStateConstant int state) {
+        if (state == BaseMultiStateConstant.hide) {
+            setVisibility(GONE);
+            return;
+        }
         setVisibility(VISIBLE);
         switch (state) {
             case BaseMultiStateConstant.Loading:
