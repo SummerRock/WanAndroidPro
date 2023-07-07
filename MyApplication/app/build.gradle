@@ -1,7 +1,4 @@
 apply plugin: 'com.android.application' // 引入 android gradle 插件
-//使用插件
-apply plugin: CustomPlugin
-apply plugin: 'com.demo.plugin'
 
 android { // 配置 android gradle plugin 需要的内容
     compileSdkVersion 31
@@ -70,16 +67,4 @@ dependencies { // 项目需要的依赖
 
     /** 上拉刷新、下拉加载 **/
     implementation('com.scwang.smartrefresh:SmartRefreshLayout:1.1.0')
-}
-
-//自定义插件：实现Plugin类接口，重写apply方法 ./gradlew CustomPlugin来运行
-class CustomPlugin implements Plugin<Project> {
-    @Override
-    void apply(Project project) {
-        project.task('CustomPluginTask') {
-            doLast {
-                println "大家好,我是一个自定义插件，在这里写下你的具体功能"
-            }
-        }
-    }
 }
