@@ -9,14 +9,17 @@
 
     <TextView
         android:id="@+id/home_fg_item_title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:lines="1"
         android:textColor="@android:color/black"
         android:textSize="17sp"
+        android:ellipsize="end"
+        android:layout_marginRight="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/home_fg_item_collect_switch"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="遇到Android12系统上的一个" />
+        tools:text="文章标题文章标题文章标题文章标题文章标题文章标题文章标题文章标题文章标题" />
 
     <TextView
         android:id="@+id/home_fg_item_author"
@@ -25,5 +28,17 @@
         android:textSize="14sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/home_fg_item_title"
-        tools:text="鸿洋" />
+        tools:text="作者名字" />
+
+    <androidx.appcompat.widget.AppCompatToggleButton
+        android:id="@+id/home_fg_item_collect_switch"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/toggle_button_selector"
+        android:textOff=""
+        android:textOn=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.2" />
 </androidx.constraintlayout.widget.ConstraintLayout>

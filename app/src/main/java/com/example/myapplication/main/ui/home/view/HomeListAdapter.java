@@ -3,7 +3,9 @@ package com.example.myapplication.main.ui.home.view;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,6 +36,26 @@ public class HomeListAdapter extends BaseListAdapter<HomeListAdapter.ViewHolder,
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         HomeModelVo.DatasDTO datasDTO = data.get(position);
+        holder.favoriteToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    // 收藏按钮被选中，执行收藏操作
+                    addToFavorites();
+                } else {
+                    // 收藏按钮未选中，执行取消收藏操作
+                    removeFromFavorites();
+                }
+            }
+
+            private void removeFromFavorites() {
+
+            }
+
+            private void addToFavorites() {
+
+            }
+        });
         holder.title.setText(datasDTO.getTitle());
         holder.author.setText(TextTools.getStringWithDefaultValue(datasDTO.getAuthor(), "佚名"));
         holder.itemView.setOnClickListener(view -> RouterUtils.jumpScheme(datasDTO.getLink(), ContextUtils.getActivityFromView(holder.itemView)));
@@ -44,10 +66,13 @@ public class HomeListAdapter extends BaseListAdapter<HomeListAdapter.ViewHolder,
         TextView title;
         TextView author;
 
+        ToggleButton favoriteToggleButton;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.home_fg_item_title);
             author = itemView.findViewById(R.id.home_fg_item_author);
+            favoriteToggleButton = itemView.findViewById(R.id.home_fg_item_collect_switch);
         }
     }
 }
