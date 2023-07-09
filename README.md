@@ -1,3 +1,2 @@
-# MyGradleApplication
-For Gradle Test
-用于Gradle语法测试
+# WanAndroidPro
+利用自己业余时间开发出一款自己能满意的App
