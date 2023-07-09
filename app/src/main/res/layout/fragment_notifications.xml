@@ -6,17 +6,142 @@
     android:layout_height="match_parent"
     tools:context=".main.ui.mine.MineFragment">
 
-    <TextView
-        android:id="@+id/text_notifications"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- 头部区域 -->
+        <RelativeLayout
+            android:id="@+id/header_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/profile_image"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerVertical="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_mine_avatar_black_32dp" />
+
+            <TextView
+                android:id="@+id/profile_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@id/profile_image"
+                android:text="John Doe"
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
+
+        </RelativeLayout>
+
+        <!-- 内容区域 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/header_layout"
+            android:orientation="vertical">
+
+            <!-- 我的订单 -->
+            <LinearLayout
+                android:id="@+id/my_favorite_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_favorite_star_black_512dp"
+                    app:tint="@color/colorPrimary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="我的订单"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="end"
+                    android:src="@drawable/ic_right_arrow_black_512dp"
+                    app:tint="@color/colorPrimary" />
+
+            </LinearLayout>
+
+            <!-- 收货地址 -->
+            <LinearLayout
+                android:id="@+id/my_notifications_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_notifications_black_24dp"
+                    app:tint="@color/colorPrimary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="消息"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="end"
+                    android:src="@drawable/ic_right_arrow_black_512dp"
+                    app:tint="@color/colorPrimary" />
+
+            </LinearLayout>
+
+            <!-- 设置 -->
+            <LinearLayout
+                android:id="@+id/settings_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_settings_black_24dp"
+                    app:tint="@color/colorPrimary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="设置"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="end"
+                    android:src="@drawable/ic_right_arrow_black_512dp"
+                    app:tint="@color/colorPrimary" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

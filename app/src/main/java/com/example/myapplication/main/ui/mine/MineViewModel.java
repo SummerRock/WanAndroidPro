@@ -10,7 +10,7 @@ public class MineViewModel extends ViewModel {
 
     public MineViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is notifications fragment");
+        mText.setValue("张三");
     }
 
     public LiveData<String> getText() {

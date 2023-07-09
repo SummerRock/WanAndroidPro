@@ -24,7 +24,7 @@ public class MineFragment extends Fragment {
         binding = FragmentNotificationsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textNotifications;
+        final TextView textView = binding.profileName;
         mineViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
