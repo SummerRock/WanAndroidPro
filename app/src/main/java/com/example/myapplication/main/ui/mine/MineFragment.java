@@ -1,4 +1,4 @@
-package com.example.myapplication.main.ui.notifications;
+package com.example.myapplication.main.ui.mine;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,20 +12,20 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.myapplication.databinding.FragmentNotificationsBinding;
 
-public class NotificationsFragment extends Fragment {
+public class MineFragment extends Fragment {
 
     private FragmentNotificationsBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        NotificationsViewModel notificationsViewModel =
-                new ViewModelProvider(this).get(NotificationsViewModel.class);
+        MineViewModel mineViewModel =
+                new ViewModelProvider(this).get(MineViewModel.class);
 
         binding = FragmentNotificationsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textNotifications;
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        mineViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

@@ -4,7 +4,7 @@
     <string name="title_activity_main_v2">玩Android Pro</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_mine">Mine</string>
     <string name="str_network_error">网络连接错误</string>
     <string name="str_network_retry">重试</string>
     <string name="str_system_failed">系统出现故障</string>

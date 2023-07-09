@@ -18,8 +18,8 @@
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.myapplication.main.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
+        android:id="@+id/navigation_mine"
+        android:name="com.example.myapplication.main.ui.mine.MineFragment"
+        android:label="@string/title_mine"
         tools:layout="@layout/fragment_notifications" />
 </navigation>
