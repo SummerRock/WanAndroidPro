@@ -10,18 +10,19 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.myapplication.databinding.FragmentNotificationsBinding;
+import com.example.myapplication.databinding.FragmentMineBinding;
+
 
 public class MineFragment extends Fragment {
 
-    private FragmentNotificationsBinding binding;
+    private FragmentMineBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         MineViewModel mineViewModel =
                 new ViewModelProvider(this).get(MineViewModel.class);
 
-        binding = FragmentNotificationsBinding.inflate(inflater, container, false);
+        binding = FragmentMineBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.profileName;
