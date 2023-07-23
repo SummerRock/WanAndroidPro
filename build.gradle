@@ -1,7 +1,8 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript { // 配置脚本的 classpath
-    
+
+    ext.kotlin_version = '1.5.21' // 替换成你希望使用的 Kotlin 版本
     repositories { // 项目的仓库地址，会按顺序依次查找
         google()
         jcenter()
@@ -9,7 +10,7 @@ buildscript { // 配置脚本的 classpath
     }
     dependencies { // 项目的依赖
         classpath 'com.android.tools.build:gradle:4.2.2'
-        
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
