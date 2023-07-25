@@ -3,7 +3,7 @@ package com.example.myapplication.base.view;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.common.List.CollectionUtils;
+import com.common.list.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,8 +1,7 @@
-package com.common.List;
+package com.common.list;
 
 import androidx.annotation.Nullable;
 
-import java.util.Collections;
 import java.util.List;
 
 public class CollectionUtils {
