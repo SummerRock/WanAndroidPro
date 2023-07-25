@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application' // 引入 android gradle 插件
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android { // 配置 android gradle plugin 需要的内容
     compileSdkVersion 31
