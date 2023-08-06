@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.myapplication.base.login.LoginManager;
 import com.example.myapplication.databinding.FragmentMineBinding;
 
 
@@ -25,6 +26,14 @@ public class MineFragment extends Fragment {
         binding = FragmentMineBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        View headerLayout = binding.headerLayout;
+        headerLayout.setOnClickListener(view -> {
+            if (!LoginManager.Companion.getInstance().isLoggedIn()) {
+                LoginManager.Companion.getInstance().showLoginDialog(requireContext());
+            } else {
+                // TODO
+            }
+        });
         final TextView textView = binding.profileName;
         mineViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;

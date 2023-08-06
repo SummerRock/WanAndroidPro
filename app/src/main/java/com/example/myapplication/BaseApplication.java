@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
+import com.common.storage.MMKVHelper;
 import com.example.myapplication.main.MainActivityV2;
 
 public class BaseApplication extends Application implements Thread.UncaughtExceptionHandler {
@@ -13,6 +14,7 @@ public class BaseApplication extends Application implements Thread.UncaughtExcep
     public void onCreate() {
         super.onCreate();
         Thread.setDefaultUncaughtExceptionHandler(this);
+        MMKVHelper.INSTANCE.initialize(this);
     }
 
     @Override
