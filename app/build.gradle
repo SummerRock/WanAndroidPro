@@ -1,15 +1,15 @@
 apply plugin: 'com.android.application' // 引入 android gradle 插件
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply from: this.project.file('../config.gradle')
 
 android { // 配置 android gradle plugin 需要的内容
-    compileSdkVersion 31
-
+    compileSdkVersion this.project.ext.compileSdkVersion
 
     defaultConfig { // 版本，applicationId 等配置
         applicationId "com.example.myapplication"
-        minSdkVersion 21
-        targetSdkVersion 31
+        minSdkVersion this.project.ext.minSdkVersion
+        targetSdkVersion this.project.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
 
@@ -21,8 +21,8 @@ android { // 配置 android gradle plugin 需要的内容
     }
 
     compileOptions { // 指定 java 版本
-        sourceCompatibility 1.8
-        targetCompatibility 1.8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 
     buildTypes {
@@ -49,7 +49,7 @@ android { // 配置 android gradle plugin 需要的内容
 dependencies { // 项目需要的依赖
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation "androidx.appcompat:appcompat:$this.project.ext.appCompatVersion"
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'com.google.android.material:material:1.4.+'
     implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
@@ -58,7 +58,7 @@ dependencies { // 项目需要的依赖
     implementation 'androidx.navigation:navigation-fragment:2.5.2'
     implementation 'androidx.navigation:navigation-ui:2.5.2'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
-    implementation 'androidx.databinding:databinding-runtime:4.2.0'
+    implementation 'androidx.databinding:databinding-runtime:8.0.1'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0' // 如果需要使用 Gson 进行数据转换
     implementation 'com.tencent:mmkv:1.2.10'
