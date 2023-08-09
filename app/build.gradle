@@ -31,7 +31,6 @@ android { // 配置 android gradle plugin 需要的内容
             minifyEnabled false
             // 启用资源压缩
             shrinkResources false
-            useProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
@@ -43,6 +42,7 @@ android { // 配置 android gradle plugin 需要的内容
     viewBinding {
         enabled true
     }
+    namespace 'com.example.myapplication'
 
 }
 
