@@ -52,6 +52,7 @@ class LoginManager private constructor() {
                         ) {
                             if (response.isSuccessful) {
                                 val responseBody = response.body()
+                                saveUsername(responseBody?.data?.username ?: "")
                                 // 处理响应数据
                             } else {
                                 // 处理错误情况
