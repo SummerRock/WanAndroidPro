@@ -16,6 +16,7 @@ public class RetrofitManager {
             CookieInterceptor cookieInterceptor = new CookieInterceptor();
             // 创建 OkHttpClient 实例并添加拦截器
             OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                    .cookieJar(new CustomCookieJar())
                     .addInterceptor(cookieInterceptor) // 添加自定义拦截器
                     .build();
             retrofit = new Retrofit.Builder()
