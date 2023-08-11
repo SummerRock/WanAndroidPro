@@ -22,6 +22,8 @@ class LoginManager private constructor() {
         println("Singleton instance initialized.")
     }
 
+    private val loginVo : LoginVo? = null
+
     fun doSomething() {
         println("Singleton is doing something.")
     }
@@ -79,12 +81,12 @@ class LoginManager private constructor() {
 
     // 保存用户名
     fun saveUsername(username: String) {
-        MMKVHelper.getDefaultMMKV().encode(KEY_USERNAME, username)
+        MMKVHelper.getDefaultMMKV().encode(KEY_USER_INFO, username)
     }
 
     // 获取用户名
-    fun getUsername(): String {
-        return MMKVHelper.getDefaultMMKV().decodeString(KEY_USERNAME, "") ?: ""
+    fun getLoginInfo(): LoginVo? {
+        return loginVo;
     }
 
     // 保存登录状态
@@ -94,11 +96,11 @@ class LoginManager private constructor() {
 
     // 获取登录状态
     fun isLoggedIn(): Boolean {
-        return !TextUtils.isEmpty(MMKVHelper.getDefaultMMKV().decodeString(KEY_USERNAME, ""))
+        return loginVo != null
     }
 
     companion object {
-        private const val KEY_USERNAME = "username"
+        private const val KEY_USER_INFO = "user_info_key"
         private const val KEY_LOGGED_IN = "logged_in"
 
         // 通过 lazy 属性委托确保线程安全的延迟初始化

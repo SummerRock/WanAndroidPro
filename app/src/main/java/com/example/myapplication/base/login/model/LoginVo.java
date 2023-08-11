@@ -2,7 +2,16 @@ package com.example.myapplication.base.login.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class LoginVo {
+
+    @SerializedName("admin")
+    private boolean admin;
+    @SerializedName("coinCount")
+    private int coinCount;
+    @SerializedName("collectIds")
+    private List<Integer> collectIds;
 
     @SerializedName("id")
     private long id;
@@ -16,12 +25,12 @@ public class LoginVo {
     private String email;
     @SerializedName("password")
     private String password;
-    @SerializedName("signature")
-    private String signature;
-    @SerializedName("sex")
-    private String sex;
-    @SerializedName("birthday")
-    private String birthday;
+    @SerializedName("publicName")
+    private String publicName;
+    @SerializedName("nickname")
+    private String nickname;
+    @SerializedName("type")
+    private int type;
 
     public long getId() {
         return id;
@@ -43,19 +52,31 @@ public class LoginVo {
         return email;
     }
 
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public int getCoinCount() {
+        return coinCount;
+    }
+
+    public List<Integer> getCollectIds() {
+        return collectIds;
+    }
+
     public String getPassword() {
         return password;
     }
 
-    public String getSignature() {
-        return signature;
+    public String getPublicName() {
+        return publicName;
     }
 
-    public String getSex() {
-        return sex;
+    public String getNickname() {
+        return nickname;
     }
 
-    public String getBirthday() {
-        return birthday;
+    public int getType() {
+        return type;
     }
 }
