@@ -13,7 +13,7 @@ public class MineViewModel extends ViewModel {
     public MineViewModel() {
         mText = new MutableLiveData<>();
         if (LoginManager.Companion.getInstance().isLoggedIn()) {
-            mText.setValue("张三");
+            mText.setValue(LoginManager.Companion.getInstance().getUsername());
         } else {
             mText.setValue("未登录");
         }
