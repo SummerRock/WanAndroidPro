@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
+import com.common.json.GsonHelper
 import com.common.storage.MMKVHelper
 import com.example.myapplication.R
 import com.example.myapplication.base.login.model.LoginVo
@@ -22,11 +23,7 @@ class LoginManager private constructor() {
         println("Singleton instance initialized.")
     }
 
-    private val loginVo : LoginVo? = null
-
-    fun doSomething() {
-        println("Singleton is doing something.")
-    }
+    private var loginVo : LoginVo? = null
 
     fun showLoginDialog(context: Context) {
         // 获取LayoutInflater实例
@@ -54,8 +51,8 @@ class LoginManager private constructor() {
                         ) {
                             if (response.isSuccessful) {
                                 val responseBody = response.body()
-                                saveUsername(responseBody?.data?.username ?: "")
                                 // 处理响应数据
+                                saveLoginInfo(responseBody?.data)
                             } else {
                                 // 处理错误情况
                             }
@@ -80,18 +77,20 @@ class LoginManager private constructor() {
     }
 
     // 保存用户名
-    fun saveUsername(username: String) {
-        MMKVHelper.getDefaultMMKV().encode(KEY_USER_INFO, username)
+    fun saveLoginInfo(loginVo: LoginVo?) {
+        this.loginVo = loginVo
+        MMKVHelper.getDefaultMMKV().encode(KEY_USER_INFO, GsonHelper.toJson(loginVo ?: ""))
     }
 
     // 获取用户名
     fun getLoginInfo(): LoginVo? {
+        if (loginVo == null) {
+            val loginVoStr = MMKVHelper.getDefaultMMKV().decodeString(KEY_USER_INFO, "")
+            if (!TextUtils.isEmpty(loginVoStr)) {
+                loginVo = GsonHelper.fromJson(loginVoStr, LoginVo::class.java)
+            }
+        }
         return loginVo;
-    }
-
-    // 保存登录状态
-    fun setLoggedIn(loggedIn: Boolean) {
-        MMKVHelper.getDefaultMMKV().encode(KEY_LOGGED_IN, loggedIn)
     }
 
     // 获取登录状态

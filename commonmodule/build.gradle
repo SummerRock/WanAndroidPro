@@ -28,6 +28,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation "androidx.appcompat:appcompat:$this.project.ext.appCompatVersion"
+    implementation "com.squareup.retrofit2:retrofit:$this.project.ext.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$this.project.ext.retrofitVersion" // 如果需要使用 Gson 进行数据转换
     implementation 'com.tencent:mmkv:1.2.10'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
