@@ -1,2 +1,3 @@
 rootProject.name='Wan_Android_Pro'
 include ':app', ':commonmodule'
+include ':monitor'

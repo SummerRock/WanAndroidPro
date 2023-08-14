@@ -6,8 +6,9 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
+import com.common.mainModule.LogUtils;
 import com.common.storage.MMKVHelper;
-import com.example.myapplication.main.MainActivityV2;
+import com.example.monitor.FPSMonitor;
 
 public class BaseApplication extends Application implements Thread.UncaughtExceptionHandler {
     @Override
@@ -15,6 +16,18 @@ public class BaseApplication extends Application implements Thread.UncaughtExcep
         super.onCreate();
         Thread.setDefaultUncaughtExceptionHandler(this);
         MMKVHelper.INSTANCE.initialize(this);
+        initMonitor();
+    }
+
+    private void initMonitor() {
+        FPSMonitor fpsMonitor = new FPSMonitor();
+        fpsMonitor.setFPSListener(new FPSMonitor.FPSListener() {
+            @Override
+            public void onFPSUpdated(int fps) {
+                LogUtils.i("FPS: " + fps);
+            }
+        });
+        fpsMonitor.start();
     }
 
     @Override
