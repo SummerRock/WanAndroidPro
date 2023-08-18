@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.common.mainModule.LogUtils;
 import com.common.storage.MMKVHelper;
 import com.example.monitor.FPSMonitor;
@@ -17,6 +18,11 @@ public class BaseApplication extends Application implements Thread.UncaughtExcep
         Thread.setDefaultUncaughtExceptionHandler(this);
         MMKVHelper.INSTANCE.initialize(this);
         initMonitor();
+        if (BuildConfig.DEBUG) {
+            ARouter.openLog(); // 开启日志
+            ARouter.openDebug(); // 开启调试模式，如果在 InstantRun 模式下运行，必须开启调试模式！
+        }
+        ARouter.init(this); // 初始化ARouter
     }
 
     private void initMonitor() {
