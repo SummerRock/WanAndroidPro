@@ -13,16 +13,17 @@ android { // 配置 android gradle plugin 需要的内容
         versionCode 1
         versionName "1.0"
 
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     dataBinding {
         enabled = true
-    }
-
-    compileOptions { // 指定 java 版本
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
     }
 
     buildTypes {
@@ -65,7 +66,7 @@ dependencies { // 项目需要的依赖
     implementation 'androidx.preference:preference:1.2.0'
 
     implementation 'com.alibaba:arouter-api:1.5.1' // 请替换为最新版本号
-    annotationProcessor 'com.alibaba:arouter-compiler:1.5.1' // 请替换为最新版本号
+    kapt 'com.alibaba:arouter-compiler:1.5.1' // 请替换为最新版本号
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
