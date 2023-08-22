@@ -6,12 +6,19 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleEventObserver;
+
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.common.mainModule.LogUtils;
 import com.common.storage.MMKVHelper;
+import com.example.monitor.AppLifecycleListener;
 import com.example.monitor.FPSMonitor;
 
 public class BaseApplication extends Application implements Thread.UncaughtExceptionHandler {
+
+    private AppLifecycleListener appLifecycleListener;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -23,6 +30,7 @@ public class BaseApplication extends Application implements Thread.UncaughtExcep
             ARouter.openDebug(); // 开启调试模式，如果在 InstantRun 模式下运行，必须开启调试模式！
         }
         ARouter.init(this); // 初始化ARouter
+        addLifeCycleMonitor();
     }
 
     private void initMonitor() {
@@ -34,6 +42,15 @@ public class BaseApplication extends Application implements Thread.UncaughtExcep
             }
         });
         fpsMonitor.start();
+    }
+
+    private void addLifeCycleMonitor() {
+        appLifecycleListener = new AppLifecycleListener();
+        registerActivityLifecycleCallbacks(appLifecycleListener);
+    }
+
+    public boolean isAppInForeground() {
+        return appLifecycleListener.isAppInForeground();
     }
 
     @Override
