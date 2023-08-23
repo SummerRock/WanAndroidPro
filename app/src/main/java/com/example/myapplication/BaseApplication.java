@@ -14,15 +14,15 @@ import com.common.mainModule.LogUtils;
 import com.common.storage.MMKVHelper;
 import com.example.monitor.AppLifecycleListener;
 import com.example.monitor.FPSMonitor;
+import com.example.myapplication.main.MainActivityV2;
 
-public class BaseApplication extends Application implements Thread.UncaughtExceptionHandler {
+public class BaseApplication extends Application {
 
     private AppLifecycleListener appLifecycleListener;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        Thread.setDefaultUncaughtExceptionHandler(this);
         MMKVHelper.INSTANCE.initialize(this);
         initMonitor();
         if (BuildConfig.DEBUG) {
@@ -31,6 +31,7 @@ public class BaseApplication extends Application implements Thread.UncaughtExcep
         }
         ARouter.init(this); // 初始化ARouter
         addLifeCycleMonitor();
+        setupCrashHandler();
     }
 
     private void initMonitor() {
@@ -53,13 +54,34 @@ public class BaseApplication extends Application implements Thread.UncaughtExcep
         return appLifecycleListener.isAppInForeground();
     }
 
-    @Override
-    public void uncaughtException(Thread thread, Throwable throwable) {
-//        Intent intent = new Intent(this, MainActivityV2.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-//        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-//        alarmManager.set(AlarmManager.RTC, System.currentTimeMillis() + 1000, pendingIntent);
-//        System.exit(2);
+    private void setupCrashHandler() {
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread thread, Throwable throwable) {
+                // 在这里执行你的自定义操作，例如记录崩溃信息或上传错误报告
+                handleCrash(throwable);
+            }
+        });
+    }
+
+    private void handleCrash(Throwable throwable) {
+        // 在这里可以执行自定义操作，例如记录崩溃信息、上传错误报告等
+        // 你可以使用日志记录、崩溃报告工具等方式来处理
+        LogUtils.e("App crashed: " + throwable.getMessage());
+
+        // 例如，你可以在这里上传错误报告到服务器
+        // uploadErrorReportToServer(throwable);
+
+        // 最后，让应用程序崩溃
+        System.exit(1);
+    }
+
+    private void restartToFirstActivity() {
+        Intent intent = new Intent(this, MainActivityV2.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC, System.currentTimeMillis() + 1000, pendingIntent);
+        System.exit(2);
     }
 }
