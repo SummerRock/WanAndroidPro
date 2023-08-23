@@ -35,4 +35,13 @@ public class MainActivityV2 extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.navView, navController);
     }
 
+    /**
+     * 当前活动失去焦点并停止：当用户通过按下 Home 键、最近任务键、屏幕关闭或其他方式离开当前活动，将其放入后台并停止时，onRestart() 方法会在用户再次返回到该活动时被调用。
+     * <p>
+     * 启动另一个活动后返回：当用户从当前活动启动了另一个活动，并在后来通过返回按钮或者其他方式返回到当前活动时，onRestart() 方法也会被调用。
+     */
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
 }
