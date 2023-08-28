@@ -6,7 +6,4 @@ import java.util.List;
 
 public class CollectInnerVo {
 
-    @SerializedName("curPage")
-    private int curPage;
-
 }

@@ -60,6 +60,7 @@ dependencies { // 项目需要的依赖
     implementation 'androidx.navigation:navigation-ui:2.5.2'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation 'androidx.databinding:databinding-runtime:8.0.1'
+    implementation "org.greenrobot:eventbus:$this.project.ext.eventbus"
     implementation "com.squareup.retrofit2:retrofit:$this.project.ext.retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$this.project.ext.retrofitVersion" // 如果需要使用 Gson 进行数据转换
     implementation 'com.tencent:mmkv:1.2.10'

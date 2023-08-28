@@ -1,13 +1,18 @@
 package com.example.myapplication.main.ui.home;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.common.mainModule.LogUtils;
+import com.example.myapplication.base.favorite.CollectSuccessEvent;
 import com.example.myapplication.base.fragment.BaseFragment;
 import com.example.myapplication.base.model.NetworkModel;
 import com.example.myapplication.base.view.BaseMultiStateConstant;
@@ -18,6 +23,9 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 
 public class HomeFragment extends BaseFragment<HomeViewModel, FragmentHomeBinding> {
@@ -34,8 +42,14 @@ public class HomeFragment extends BaseFragment<HomeViewModel, FragmentHomeBindin
         return FragmentHomeBinding.inflate(inflater, container, false);
     }
 
+    @Subscribe
+    public void onCollectSuccessEvent(CollectSuccessEvent event) {
+        LogUtils.i("");
+    }
+
     @Override
     protected void performAction() {
+        EventBus.getDefault().register(this);
         final SmartRefreshLayout refreshLayout = binding.homeFragRefreshLayout;
         refreshLayout.setRefreshFooter(new ClassicsFooter(requireContext()));
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -82,5 +96,11 @@ public class HomeFragment extends BaseFragment<HomeViewModel, FragmentHomeBindin
                 changeInnerStatus(BaseMultiStateConstant.NetworkFail);
             }
         });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this); // 解注册
     }
 }

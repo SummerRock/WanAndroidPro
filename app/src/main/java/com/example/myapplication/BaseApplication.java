@@ -18,11 +18,13 @@ import com.example.myapplication.main.MainActivityV2;
 
 public class BaseApplication extends Application {
 
+    private static BaseApplication instance;
     private AppLifecycleListener appLifecycleListener;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        instance = this;
         MMKVHelper.INSTANCE.initialize(this);
         initMonitor();
         if (BuildConfig.DEBUG) {
@@ -34,6 +36,10 @@ public class BaseApplication extends Application {
         setupCrashHandler();
     }
 
+    public static BaseApplication getInstance() {
+        return instance;
+    }
+
     private void initMonitor() {
         FPSMonitor fpsMonitor = new FPSMonitor();
         fpsMonitor.setFPSListener(new FPSMonitor.FPSListener() {
@@ -42,7 +48,7 @@ public class BaseApplication extends Application {
                 LogUtils.i("FPS: " + fps);
             }
         });
-        fpsMonitor.start();
+//        fpsMonitor.start();
     }
 
     private void addLifeCycleMonitor() {

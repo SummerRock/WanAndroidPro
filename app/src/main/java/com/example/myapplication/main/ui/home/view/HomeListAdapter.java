@@ -15,6 +15,7 @@ import com.common.mainModule.ContextUtils;
 import com.common.mainModule.RouterUtils;
 import com.common.mainModule.TextTools;
 import com.example.myapplication.R;
+import com.example.myapplication.base.favorite.CollectDataRepository;
 import com.example.myapplication.base.view.BaseListAdapter;
 import com.example.myapplication.main.ui.home.model.HomeModelVo;
 
@@ -36,6 +37,7 @@ public class HomeListAdapter extends BaseListAdapter<HomeListAdapter.ViewHolder,
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         HomeModelVo.DatasDTO datasDTO = data.get(position);
+        holder.favoriteToggleButton.setChecked(datasDTO.getCollect());
         holder.favoriteToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
@@ -49,11 +51,11 @@ public class HomeListAdapter extends BaseListAdapter<HomeListAdapter.ViewHolder,
             }
 
             private void removeFromFavorites() {
-
+                CollectDataRepository.getInstance().queryUnCollectArticle(datasDTO.getId());
             }
 
             private void addToFavorites() {
-
+                CollectDataRepository.getInstance().queryCollectArticle(datasDTO.getId());
             }
         });
         holder.title.setText(datasDTO.getTitle());

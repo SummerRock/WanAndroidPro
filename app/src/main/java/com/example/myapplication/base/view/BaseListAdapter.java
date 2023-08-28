@@ -29,6 +29,10 @@ public abstract class BaseListAdapter<V extends RecyclerView.ViewHolder, T> exte
         notifyDataSetChanged();
     }
 
+    public List<T> getData() {
+        return this.data;
+    }
+
     @Override
     public int getItemCount() {
         return CollectionUtils.getListSize(data);
