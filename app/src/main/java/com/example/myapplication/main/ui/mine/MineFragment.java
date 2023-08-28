@@ -1,44 +1,35 @@
 package com.example.myapplication.main.ui.mine;
 
-import static android.app.Activity.RESULT_OK;
-
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.common.router.RouterConstants;
-import com.example.monitor.FPSOverlayView;
+import com.example.myapplication.base.fragment.BaseFragment;
+import com.example.myapplication.base.login.LoginEvent;
 import com.example.myapplication.base.login.LoginManager;
 import com.example.myapplication.databinding.FragmentMineBinding;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
-public class MineFragment extends Fragment {
 
-    private FragmentMineBinding binding;
+public class MineFragment extends BaseFragment<MineViewModel, FragmentMineBinding> {
 
-    private ActivityResultLauncher<Intent> launcher;
+    @Override
+    protected Class<MineViewModel> getViewModelClass() {
+        return MineViewModel.class;
+    }
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        MineViewModel mineViewModel =
-                new ViewModelProvider(this).get(MineViewModel.class);
+    @Override
+    protected FragmentMineBinding getBinding(LayoutInflater inflater, ViewGroup container) {
+        return FragmentMineBinding.inflate(inflater, container, false);
+    }
 
-        binding = FragmentMineBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-
+    @Override
+    protected void performAction() {
         View headerLayout = binding.headerLayout;
         headerLayout.setOnClickListener(view -> {
             if (!LoginManager.Companion.getInstance().isLoggedIn()) {
@@ -48,16 +39,7 @@ public class MineFragment extends Fragment {
             }
         });
         final TextView textView = binding.profileName;
-        mineViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-
-        launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == RESULT_OK) {
-                        // 在这里处理返回的结果
-                        FPSOverlayView fpsOverlayView = new FPSOverlayView(requireContext());
-                        fpsOverlayView.setFPS(45);// TODO: fixME
-                    }
-                });
+        viewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         final View setting = binding.settingsLayout;
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,12 +50,20 @@ public class MineFragment extends Fragment {
                 ARouter.getInstance().build(RouterConstants.SETTING_ACTIVITY).navigation();
             }
         });
-        return root;
+        EventBus.getDefault().register(this);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void handleLoginEvent(LoginEvent event) {
+        if (event.loginVo != null) {
+            viewModel.getText().setValue(event.loginVo.getUsername());
+        }
     }
 }

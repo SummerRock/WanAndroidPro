@@ -19,7 +19,7 @@ public class MineViewModel extends ViewModel {
         }
     }
 
-    public LiveData<String> getText() {
+    public MutableLiveData<String> getText() {
         return mText;
     }
 }

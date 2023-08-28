@@ -13,6 +13,7 @@ import com.example.myapplication.R
 import com.example.myapplication.base.login.model.LoginVo
 import com.example.myapplication.base.model.NetworkModel
 import com.example.myapplication.base.net.RetrofitManager
+import org.greenrobot.eventbus.EventBus
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -53,6 +54,8 @@ class LoginManager private constructor() {
                                 val responseBody = response.body()
                                 // 处理响应数据
                                 saveLoginInfo(responseBody?.data)
+                                val obj = LoginEvent(responseBody?.data)
+                                EventBus.getDefault().post(obj)
                             } else {
                                 // 处理错误情况
                             }
