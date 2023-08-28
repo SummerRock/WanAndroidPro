@@ -1,5 +1,18 @@
 package com.example.myapplication.base.net;
 
+import android.text.TextUtils;
+
+import androidx.annotation.NonNull;
+
+import com.common.json.GsonHelper;
+import com.common.storage.MMKVHelper;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.Collections;
+import java.util.List;
+
+import okhttp3.Cookie;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -38,5 +51,27 @@ public class RetrofitManager {
 
     public Retrofit getRetrofit() {
         return retrofit;
+    }
+
+    private static final String COOKIE_KEY = "local_cookie";
+    public void clearCookie() {
+        MMKVHelper.INSTANCE.getDefaultMMKV().remove(COOKIE_KEY);
+    }
+
+    public void saveCookie(@NonNull List<Cookie> localCookies) {
+        MMKVHelper.INSTANCE.getDefaultMMKV().encode(COOKIE_KEY, GsonHelper.toJson(localCookies));
+    }
+
+    public List<Cookie> getCookie() {
+        String cookieStr = MMKVHelper.INSTANCE.getDefaultMMKV().decodeString(COOKIE_KEY, "");
+        if (TextUtils.isEmpty(cookieStr)) {
+            return Collections.emptyList();
+        } else {
+            // 使用TypeToken来处理泛型类型
+            Type listType = new TypeToken<List<Cookie>>() {
+            }.getType();
+            List<Cookie> localCookies = GsonHelper.fromJson(cookieStr, listType);
+            return localCookies;
+        }
     }
 }

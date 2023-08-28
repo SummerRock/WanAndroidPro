@@ -11,21 +11,21 @@ import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
 
 public class CustomCookieJar implements CookieJar {
-    private final List<Cookie> localCookies = new ArrayList<>();
 
     @Override
     public void saveFromResponse(@NonNull HttpUrl url, @NonNull List<Cookie> cookies) {
         if (url.url().getPath().endsWith("login")) {
-            localCookies.addAll(cookies);
+            RetrofitManager.getInstance().saveCookie(cookies);
         }
     }
 
     @Override
     public List<Cookie> loadForRequest(@NonNull HttpUrl url) {
-        if(url.url().getPath().endsWith("login")) {
-            return localCookies;
-        } else {
-            return Collections.emptyList();
-        }
+//        if(url.url().getPath().endsWith("login")) {
+//            return localCookies;
+//        } else {
+//            return Collections.emptyList();
+//        }
+        return RetrofitManager.getInstance().getCookie();
     }
 }
