@@ -36,6 +36,15 @@ public class BaseApplication extends Application {
         setupCrashHandler();
     }
 
+    /**
+     * 在 onCreate() 方法之前调用
+     * @param base The new base context for this wrapper.
+     */
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+    }
+
     public static BaseApplication getInstance() {
         return instance;
     }
