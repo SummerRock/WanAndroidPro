@@ -38,14 +38,12 @@ public class HomeListAdapter extends BaseListAdapter<HomeListAdapter.ViewHolder,
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         HomeModelVo.DatasDTO datasDTO = data.get(position);
         holder.favoriteToggleButton.setChecked(datasDTO.getCollect());
-        holder.favoriteToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        holder.favoriteToggleButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if (isChecked) {
-                    // 收藏按钮被选中，执行收藏操作
+            public void onClick(View v) {
+                if (!holder.favoriteToggleButton.isChecked()) {
                     addToFavorites();
                 } else {
-                    // 收藏按钮未选中，执行取消收藏操作
                     removeFromFavorites();
                 }
             }

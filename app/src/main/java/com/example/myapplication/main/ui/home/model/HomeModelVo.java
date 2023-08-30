@@ -229,6 +229,10 @@ public class HomeModelVo {
             return collect;
         }
 
+        public void setCollect(Boolean collect) {
+            this.collect = collect;
+        }
+
         public Integer getCourseId() {
             return courseId;
         }

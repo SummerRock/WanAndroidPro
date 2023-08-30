@@ -1,18 +1,14 @@
 package com.example.myapplication.main.ui.home;
 
-import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.common.mainModule.LogUtils;
-import com.example.myapplication.base.favorite.CollectSuccessEvent;
+import com.example.myapplication.base.favorite.CollectChangeEvent;
 import com.example.myapplication.base.fragment.BaseFragment;
 import com.example.myapplication.base.model.NetworkModel;
 import com.example.myapplication.base.view.BaseMultiStateConstant;
@@ -43,8 +39,14 @@ public class HomeFragment extends BaseFragment<HomeViewModel, FragmentHomeBindin
     }
 
     @Subscribe
-    public void onCollectSuccessEvent(CollectSuccessEvent event) {
-        LogUtils.i("");
+    public void onCollectSuccessEvent(CollectChangeEvent event) {
+        for (int i = 0; i < listAdapter.getData().size(); i++) {
+            if (listAdapter.getData().get(i).getId().equals(event.id)) {
+                listAdapter.getData().get(i).setCollect(event.status);
+                listAdapter.notifyItemChanged(i);
+                break;
+            }
+        }
     }
 
     @Override

@@ -33,7 +33,7 @@ public class CollectDataRepository {
             public void onResponse(@NonNull Call<NetworkModel<CollectInnerVo>> call,
                                    @NonNull Response<NetworkModel<CollectInnerVo>> response) {
                 if (response.isSuccessful()) {
-                    EventBus.getDefault().post(new CollectSuccessEvent(articleId));
+                    EventBus.getDefault().post(new CollectChangeEvent(articleId, true));
                 } else {
                     ToastUtils.showShortToast(BaseApplication.getInstance(), "收藏失败");
                 }
@@ -52,7 +52,7 @@ public class CollectDataRepository {
             public void onResponse(@NonNull Call<NetworkModel<CollectInnerVo>> call,
                                    @NonNull Response<NetworkModel<CollectInnerVo>> response) {
                 if (response.isSuccessful()) {
-                    EventBus.getDefault().post(new UnCollectEvent(id));
+                    EventBus.getDefault().post(new CollectChangeEvent(id, false));
                 }
             }
 
