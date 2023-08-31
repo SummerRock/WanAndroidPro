@@ -29,6 +29,14 @@ public class MemoryMonitor {
 //        System.out.println("Dalvik Memory: " + dalvikMemory + " bytes");
 //        System.out.println("Native Memory: " + nativeMemory + " bytes");
 //        System.out.println("Other Memory: " + otherMemory + " bytes");
+
+        //当 Java 堆内存不足时，我们需要对应用中的缓存进行一次清理，这样能减少 OOM。
+        // 那如何才能知道 Java 堆不足呢？这就需要增加一个检测的机制了，我们可以开启一个独立的子线程，然后每隔一定的频率检测一次
+        // 获取当前虚拟机实例的内存使用上限
+        long runtimeMem = Runtime.getRuntime().maxMemory();
+        //获取当前已经申请的内存
+        long totalMem = Runtime.getRuntime().totalMemory();
+        LogUtils.i("当前虚拟机实例的内存: " + runtimeMem + " 当前已经申请的内存: " + totalMem);
     }
 }
 
