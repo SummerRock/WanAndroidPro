@@ -35,7 +35,7 @@ public class MineFragment extends BaseFragment<MineViewModel, FragmentMineBindin
             if (!LoginManager.Companion.getInstance().isLoggedIn()) {
                 LoginManager.Companion.getInstance().showLoginDialog(requireContext());
             } else {
-                // TODO
+                LoginManager.Companion.getInstance().showLogoutDialog(requireContext());
             }
         });
         final TextView textView = binding.profileName;

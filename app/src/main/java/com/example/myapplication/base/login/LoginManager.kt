@@ -11,6 +11,7 @@ import com.common.json.GsonHelper
 import com.common.storage.MMKVHelper
 import com.example.myapplication.R
 import com.example.myapplication.base.login.model.LoginVo
+import com.example.myapplication.base.model.EmptyVo
 import com.example.myapplication.base.model.NetworkModel
 import com.example.myapplication.base.net.RetrofitManager
 import org.greenrobot.eventbus.EventBus
@@ -25,6 +26,43 @@ class LoginManager private constructor() {
     }
 
     private var loginVo : LoginVo? = null
+
+    fun showLogoutDialog(context: Context) {
+        AlertDialog.Builder(context)
+            .setTitle("退出登录")
+            .setMessage("是否退出登录")
+            .setPositiveButton("确定") { dialog, which ->
+                // 点击确定按钮后的处理逻辑
+                // 可以在这里添加你的逻辑代码
+                RetrofitManager.getInstance().retrofit.create(LoginService::class.java)
+                    .logout()
+                    .enqueue(object : Callback<NetworkModel<EmptyVo>> {
+                        override fun onResponse(
+                            call: Call<NetworkModel<EmptyVo>>,
+                            response: Response<NetworkModel<EmptyVo>>
+                        ) {
+                            if (response.isSuccessful) {
+                                val responseBody = response.body()
+                                // 处理响应数据
+                                saveLoginInfo(null)
+                                val obj = LoginEvent(null)
+                                EventBus.getDefault().post(obj)
+                            } else {
+                                // 处理错误情况
+                            }
+                        }
+
+                        override fun onFailure(call: Call<NetworkModel<EmptyVo>>, t: Throwable) {
+                            // 处理网络请求失败情况
+                        }
+                    })
+            }
+            .setNegativeButton("取消") { dialog, which ->
+                // 点击取消按钮后的处理逻辑
+                // 可以在这里添加你的逻辑代码
+            }
+            .show()
+    }
 
     fun showLoginDialog(context: Context) {
         // 获取LayoutInflater实例

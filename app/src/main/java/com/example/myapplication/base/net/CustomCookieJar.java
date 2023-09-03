@@ -14,7 +14,7 @@ public class CustomCookieJar implements CookieJar {
 
     @Override
     public void saveFromResponse(@NonNull HttpUrl url, @NonNull List<Cookie> cookies) {
-        if (url.url().getPath().endsWith("login")) {
+        if (url.url().getPath().endsWith("user/login") || url.url().getPath().endsWith("user/logout/json")) {
             RetrofitManager.getInstance().saveCookie(cookies);
         }
     }
