@@ -1,25 +1,21 @@
 package com.example.myapplication.main.ui.mine;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.myapplication.base.login.LoginManager;
+import com.example.myapplication.base.login.model.LoginVo;
 
 public class MineViewModel extends ViewModel {
 
-    private final MutableLiveData<String> mText;
+    private final MutableLiveData<LoginVo> loginInfoLiveData; // 监听登录信息变化
 
     public MineViewModel() {
-        mText = new MutableLiveData<>();
-        if (LoginManager.Companion.getInstance().isLoggedIn()) {
-            mText.setValue(LoginManager.Companion.getInstance().getLoginInfo().getUsername());
-        } else {
-            mText.setValue("未登录");
-        }
+        loginInfoLiveData = new MutableLiveData<>();
+        loginInfoLiveData.setValue(LoginManager.Companion.getInstance().getLoginInfo());
     }
 
-    public MutableLiveData<String> getText() {
-        return mText;
+    public MutableLiveData<LoginVo> getLoginInfo() {
+        return loginInfoLiveData;
     }
 }
