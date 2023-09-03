@@ -25,7 +25,7 @@ class LoginManager private constructor() {
         println("Singleton instance initialized.")
     }
 
-    private var loginVo : LoginVo? = null
+    private var loginVo: LoginVo? = null
 
     fun showLogoutDialog(context: Context) {
         AlertDialog.Builder(context)
@@ -120,7 +120,11 @@ class LoginManager private constructor() {
     // 保存用户名
     fun saveLoginInfo(loginVo: LoginVo?) {
         this.loginVo = loginVo
-        MMKVHelper.getDefaultMMKV().encode(KEY_USER_INFO, GsonHelper.toJson(loginVo ?: ""))
+        if (loginVo != null) {
+            MMKVHelper.getDefaultMMKV().encode(KEY_USER_INFO, GsonHelper.toJson(loginVo))
+        } else {
+            MMKVHelper.getDefaultMMKV().remove(KEY_USER_INFO)
+        }
     }
 
     // 获取用户名
@@ -137,6 +141,10 @@ class LoginManager private constructor() {
     // 获取登录状态
     fun isLoggedIn(): Boolean {
         return loginVo != null
+    }
+
+    fun init(): Unit {
+        getLoginInfo();
     }
 
     companion object {

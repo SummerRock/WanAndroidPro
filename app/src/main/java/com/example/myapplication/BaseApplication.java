@@ -6,14 +6,12 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleEventObserver;
-
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.common.mainModule.LogUtils;
 import com.common.storage.MMKVHelper;
 import com.example.monitor.AppLifecycleListener;
 import com.example.monitor.FPSMonitor;
+import com.example.myapplication.base.login.LoginManager;
 import com.example.myapplication.main.MainActivityV2;
 
 public class BaseApplication extends Application {
@@ -34,6 +32,7 @@ public class BaseApplication extends Application {
         ARouter.init(this); // 初始化ARouter
         addLifeCycleMonitor();
         setupCrashHandler();
+        LoginManager.Companion.getInstance().init();
     }
 
     /**
