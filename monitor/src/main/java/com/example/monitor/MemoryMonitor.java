@@ -37,6 +37,8 @@ public class MemoryMonitor {
         //获取当前已经申请的内存
         long totalMem = Runtime.getRuntime().totalMemory();
         LogUtils.i("当前虚拟机实例的内存: " + runtimeMem + " 当前已经申请的内存: " + totalMem);
+
+        MemObserver.getInstance().setState(new MemInfo(totalMemory));
     }
 }
 

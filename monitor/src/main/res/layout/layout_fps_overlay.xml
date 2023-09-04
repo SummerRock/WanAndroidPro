@@ -13,4 +13,12 @@
         android:text="FPS: "
         android:textColor="#FFFFFF"
         android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/memTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="总内存: 未知"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
 </LinearLayout>

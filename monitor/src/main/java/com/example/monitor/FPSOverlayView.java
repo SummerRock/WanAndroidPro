@@ -11,10 +11,18 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.common.observer.Observer;
+
 public class FPSOverlayView {
-    private WindowManager windowManager;
+    private final WindowManager windowManager;
     private View overlayView;
-    private TextView fpsTextView;
+    private final TextView fpsTextView;
+
+    private final TextView memTextView;
+
+    private final FPSMonitor fpsMonitor = new FPSMonitor();
+
+    private final Observer<MemInfo> observer = this::setMemInfo;
 
     public FPSOverlayView(@NonNull Context context) {
         windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
@@ -23,12 +31,14 @@ public class FPSOverlayView {
         overlayView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
             @Override
             public void onViewAttachedToWindow(View v) {
-                setFPS(58);
+                fpsMonitor.start();
+                MemObserver.getInstance().registerObserver(observer);
             }
 
             @Override
             public void onViewDetachedFromWindow(View v) {
-
+                fpsMonitor.stop();
+                MemObserver.getInstance().removeObserver(observer);
             }
         });
 
@@ -56,16 +66,19 @@ public class FPSOverlayView {
         params.y = 0;
 
         fpsTextView = overlayView.findViewById(R.id.fpsTextView);
+        memTextView = overlayView.findViewById(R.id.memTextView);
 
         windowManager.addView(overlayView, params);
 
-        FPSMonitor fpsMonitor = new FPSMonitor();
         fpsMonitor.setFPSListener(this::setFPS);
-        fpsMonitor.start();
     }
 
     public void setFPS(int fps) {
         fpsTextView.setText(String.format("FPS: %d", fps));
+    }
+
+    public void setMemInfo(MemInfo memInfo) {
+        memTextView.setText(String.format("总内存: %d", memInfo.getTotalMemory()));
     }
 
     public void hide() {
