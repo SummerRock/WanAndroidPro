@@ -20,11 +20,11 @@
     <PreferenceCategory app:title="@string/sync_header">
 
         <SwitchPreferenceCompat
-            app:key="sync"
+            app:key="global_float_window_sync"
             app:title="@string/sync_title" />
 
         <SwitchPreferenceCompat
-            app:dependency="sync"
+            app:dependency="global_float_window_sync"
             app:key="attachment"
             app:summaryOff="@string/attachment_summary_off"
             app:summaryOn="@string/attachment_summary_on"

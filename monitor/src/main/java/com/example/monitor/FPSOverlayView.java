@@ -1,7 +1,6 @@
 package com.example.monitor;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.os.Build;
 import android.view.Gravity;
@@ -10,15 +9,28 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 public class FPSOverlayView {
     private WindowManager windowManager;
     private View overlayView;
     private TextView fpsTextView;
 
-    public FPSOverlayView(Context context) {
+    public FPSOverlayView(@NonNull Context context) {
         windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         LayoutInflater inflater = LayoutInflater.from(context);
         overlayView = inflater.inflate(R.layout.layout_fps_overlay, null);
+        overlayView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+            @Override
+            public void onViewAttachedToWindow(View v) {
+                setFPS(58);
+            }
+
+            @Override
+            public void onViewDetachedFromWindow(View v) {
+
+            }
+        });
 
         WindowManager.LayoutParams params;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -49,7 +61,7 @@ public class FPSOverlayView {
     }
 
     public void setFPS(int fps) {
-        fpsTextView.setText("FPS: " + fps);
+        fpsTextView.setText(String.format("FPS: %d", fps));
     }
 
     public void hide() {
