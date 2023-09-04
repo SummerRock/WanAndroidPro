@@ -9,7 +9,7 @@ public class FPSMonitor implements Choreographer.FrameCallback {
     private long lastFrameTime = 0;
     private int framesRendered = 0;
 
-    private Handler handler = new Handler(Looper.getMainLooper());
+    private final Handler handler = new Handler(Looper.getMainLooper());
 
     private FPSListener fpsListener;
 

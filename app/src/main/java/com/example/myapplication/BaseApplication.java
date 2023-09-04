@@ -10,7 +10,6 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.common.mainModule.LogUtils;
 import com.common.storage.MMKVHelper;
 import com.example.monitor.AppLifecycleListener;
-import com.example.monitor.FPSMonitor;
 import com.example.myapplication.base.login.LoginManager;
 import com.example.myapplication.main.MainActivityV2;
 
@@ -24,7 +23,6 @@ public class BaseApplication extends Application {
         super.onCreate();
         instance = this;
         MMKVHelper.INSTANCE.initialize(this);
-        initMonitor();
         if (BuildConfig.DEBUG) {
             ARouter.openLog(); // 开启日志
             ARouter.openDebug(); // 开启调试模式，如果在 InstantRun 模式下运行，必须开启调试模式！
@@ -46,17 +44,6 @@ public class BaseApplication extends Application {
 
     public static BaseApplication getInstance() {
         return instance;
-    }
-
-    private void initMonitor() {
-        FPSMonitor fpsMonitor = new FPSMonitor();
-        fpsMonitor.setFPSListener(new FPSMonitor.FPSListener() {
-            @Override
-            public void onFPSUpdated(int fps) {
-                LogUtils.i("FPS: " + fps);
-            }
-        });
-//        fpsMonitor.start();
     }
 
     private void addLifeCycleMonitor() {

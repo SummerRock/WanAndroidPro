@@ -51,13 +51,17 @@ public class FPSOverlayView {
             );
         }
 
-        params.gravity = Gravity.TOP | Gravity.START;
+        params.gravity = Gravity.TOP | Gravity.END;
         params.x = 0;
         params.y = 0;
 
         fpsTextView = overlayView.findViewById(R.id.fpsTextView);
 
         windowManager.addView(overlayView, params);
+
+        FPSMonitor fpsMonitor = new FPSMonitor();
+        fpsMonitor.setFPSListener(this::setFPS);
+        fpsMonitor.start();
     }
 
     public void setFPS(int fps) {
