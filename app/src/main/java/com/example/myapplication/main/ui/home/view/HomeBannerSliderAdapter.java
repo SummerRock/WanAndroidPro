@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.common.list.CollectionUtils;
+import com.common.mainModule.LogUtils;
 import com.example.myapplication.R;
 import com.example.myapplication.main.ui.home.model.HomeBannerVo;
 import com.smarteist.autoimageslider.SliderViewAdapter;
@@ -16,11 +18,12 @@ public class HomeBannerSliderAdapter extends SliderViewAdapter<HomeBannerSliderA
     private final List<HomeBannerVo> dataList;
 
     public HomeBannerSliderAdapter(List<HomeBannerVo> dataList) {
-        this.dataList = dataList;
+        this.dataList = CollectionUtils.getListOrDefault(dataList);
     }
 
     @Override
     public SliderViewHolder onCreateViewHolder(ViewGroup parent) {
+        LogUtils.i("创建HomeBannerView");
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.image_slider_layout, parent, false);
         return new SliderViewHolder(view);
