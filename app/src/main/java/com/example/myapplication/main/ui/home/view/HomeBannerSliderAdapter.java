@@ -1,6 +1,5 @@
 package com.example.myapplication.main.ui.home.view;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,17 +7,16 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
+import com.example.myapplication.main.ui.home.model.HomeBannerVo;
 import com.smarteist.autoimageslider.SliderViewAdapter;
 
 import java.util.List;
 
-public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderViewHolder> {
-    private List<String> imageUrls;
-    private final Context context;
+public class HomeBannerSliderAdapter extends SliderViewAdapter<HomeBannerSliderAdapter.SliderViewHolder> {
+    private final List<HomeBannerVo> dataList;
 
-    public SliderAdapter(Context context, List<String> imageUrls) {
-        this.context = context;
-        this.imageUrls = imageUrls;
+    public HomeBannerSliderAdapter(List<HomeBannerVo> dataList) {
+        this.dataList = dataList;
     }
 
     @Override
@@ -30,17 +28,17 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderViewHol
 
     @Override
     public void onBindViewHolder(SliderViewHolder viewHolder, int position) {
-        Glide.with(context)
-                .load(imageUrls.get(position))
+        Glide.with(viewHolder.imageView.getContext())
+                .load(dataList.get(position).getImagePath())
                 .into(viewHolder.imageView);
     }
 
     @Override
     public int getCount() {
-        return imageUrls.size();
+        return dataList.size();
     }
 
-    public class SliderViewHolder extends SliderViewAdapter.ViewHolder {
+    public static class SliderViewHolder extends SliderViewAdapter.ViewHolder {
         ImageView imageView;
 
         public SliderViewHolder(View itemView) {

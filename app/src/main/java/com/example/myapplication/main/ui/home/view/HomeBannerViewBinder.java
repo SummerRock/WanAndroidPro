@@ -3,8 +3,6 @@ package com.example.myapplication.main.ui.home.view;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,6 +29,8 @@ public class HomeBannerViewBinder extends BaseViewBinder<HomeBannerWrap, HomeBan
 
     @Override
     protected void onBindViewHolder(@NonNull CustomViewHolder customViewHolder, @NonNull HomeBannerWrap homeBannerWrap) {
+        SliderView sliderView = customViewHolder.imageSlider;
+        sliderView.setSliderAdapter(new HomeBannerSliderAdapter(homeBannerWrap.dataList));
     }
 
     static class CustomViewHolder extends RecyclerView.ViewHolder {

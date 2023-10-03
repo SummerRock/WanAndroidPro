@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +16,7 @@ import com.example.myapplication.base.fragment.BaseFragment;
 import com.example.myapplication.base.model.NetworkModel;
 import com.example.myapplication.base.view.BaseMultiStateConstant;
 import com.example.myapplication.databinding.FragmentHomeBinding;
+import com.example.myapplication.main.ui.home.model.HomeBannerVo;
 import com.example.myapplication.main.ui.home.model.HomeBannerWrap;
 import com.example.myapplication.main.ui.home.model.HomeModelVo;
 import com.example.myapplication.main.ui.home.view.HomeBannerViewBinder;
@@ -44,7 +46,7 @@ public class HomeFragment extends BaseFragment<HomeViewModel, FragmentHomeBindin
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        displayDataList.add(null);
+        displayDataList.add(0, null);
     }
 
     @Override
@@ -110,7 +112,9 @@ public class HomeFragment extends BaseFragment<HomeViewModel, FragmentHomeBindin
                 refreshLayout.finishRefresh();
                 refreshLayout.finishLoadMore();
                 if (homeModelVoNetworkModel.data.getCurPage() == 1) {
+                    Object first = displayDataList.get(0);
                     displayDataList.clear();
+                    displayDataList.add(first);
                     displayDataList.addAll(homeModelVoNetworkModel.data.getDatas());
                     adapter.setItems(displayDataList);
                     adapter.notifyDataSetChanged();
@@ -131,6 +135,15 @@ public class HomeFragment extends BaseFragment<HomeViewModel, FragmentHomeBindin
                 }
             } else {
                 changeInnerStatus(BaseMultiStateConstant.NetworkFail);
+            }
+        });
+        viewModel.getHomeBannerLiveData().observe(getViewLifecycleOwner(), new Observer<NetworkModel<List<HomeBannerVo>>>() {
+            @Override
+            public void onChanged(NetworkModel<List<HomeBannerVo>> listNetworkModel) {
+                if (listNetworkModel.getNetStatus().equals(NetworkModel.NetStatus.SUCCESS) && listNetworkModel.data != null) {
+                    displayDataList.set(0, new HomeBannerWrap(listNetworkModel.data));
+                    adapter.notifyItemChanged(0);
+                }
             }
         });
     }

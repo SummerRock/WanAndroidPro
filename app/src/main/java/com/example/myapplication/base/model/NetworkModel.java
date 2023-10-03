@@ -32,6 +32,10 @@ public class NetworkModel<T> {
         }
     }
 
+    public boolean isEmptyData() {
+        return NetStatus.SUCCESS.equals(netStatus) && data == null;
+    }
+
     public static <T> NetworkModel<T> loading() {
         return new NetworkModel<>(NetStatus.LOADING, null, null, DEFAULT_CODE);
     }

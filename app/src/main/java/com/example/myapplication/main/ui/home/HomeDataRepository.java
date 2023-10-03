@@ -1,7 +1,5 @@
 package com.example.myapplication.main.ui.home;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
@@ -54,13 +52,13 @@ public class HomeDataRepository {
         return liveData;
     }
 
-    public MutableLiveData<NetworkModel<List<HomeBannerVo>>> queryBannerData(int index) {
+    public MutableLiveData<NetworkModel<List<HomeBannerVo>>> queryBannerData(Object index) {
         MutableLiveData<NetworkModel<List<HomeBannerVo>>> liveData = new MutableLiveData<>();
         liveData.setValue(NetworkModel.loading());
         homeService.getHomeBannerData().enqueue(new Callback<NetworkModel<List<HomeBannerVo>>>() {
             @Override
             public void onResponse(@NonNull Call<NetworkModel<List<HomeBannerVo>>> call,
-                                   Response<NetworkModel<List<HomeBannerVo>>> response) {
+                                   @NonNull Response<NetworkModel<List<HomeBannerVo>>> response) {
                 if (response.isSuccessful()) {
                     liveData.setValue(response.body());
                 } else {

@@ -17,7 +17,7 @@ public class HomeViewModel extends ViewModel {
     private final MutableLiveData<Integer> mutablePageIndexData = new MutableLiveData<>();
     private final LiveData<NetworkModel<HomeModelVo>> homeListLiveData;
 
-    private final MutableLiveData<Integer> mutableBannerData = new MutableLiveData<>();
+    private final MutableLiveData<Object> mutableBannerData = new MutableLiveData<>();
 
     private final LiveData<NetworkModel<List<HomeBannerVo>>> homeBannerLiveData;
 
@@ -33,6 +33,9 @@ public class HomeViewModel extends ViewModel {
 
     public void triggerHomeData(int pageIndex) {
         mutablePageIndexData.setValue(pageIndex);
+        if (pageIndex == 0) {
+            mutableBannerData.setValue(new Object());
+        }
     }
 
     public LiveData<NetworkModel<HomeModelVo>> getHomeListLiveData() {
