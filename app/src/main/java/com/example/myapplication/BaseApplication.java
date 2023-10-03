@@ -7,6 +7,11 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.GlideBuilder;
+import com.bumptech.glide.MemoryCategory;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.common.mainModule.LogUtils;
 import com.common.storage.MMKVHelper;
 import com.example.monitor.AppLifecycleListener;
@@ -28,6 +33,12 @@ public class BaseApplication extends Application {
             ARouter.openDebug(); // 开启调试模式，如果在 InstantRun 模式下运行，必须开启调试模式！
         }
         ARouter.init(this); // 初始化ARouter
+        // 初始化 Glide
+        Glide.init(this, new GlideBuilder().setDefaultRequestOptions(new RequestOptions()
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)));
+        // 设置全局 Glide 配置（可选）
+        Glide.get(this).setMemoryCategory(MemoryCategory.LOW);
+        // Glide.get(this).setDiskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
         addLifeCycleMonitor();
         setupCrashHandler();
         LoginManager.Companion.getInstance().init();

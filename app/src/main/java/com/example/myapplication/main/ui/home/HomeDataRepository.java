@@ -7,7 +7,10 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.myapplication.base.model.NetworkModel;
 import com.example.myapplication.base.net.RetrofitManager;
+import com.example.myapplication.main.ui.home.model.HomeBannerVo;
 import com.example.myapplication.main.ui.home.model.HomeModelVo;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,6 +48,28 @@ public class HomeDataRepository {
 
             @Override
             public void onFailure(@NonNull Call<NetworkModel<HomeModelVo>> call, @NonNull Throwable t) {
+                liveData.setValue(NetworkModel.failed(t.getMessage(), -1));
+            }
+        });
+        return liveData;
+    }
+
+    public MutableLiveData<NetworkModel<List<HomeBannerVo>>> queryBannerData(int index) {
+        MutableLiveData<NetworkModel<List<HomeBannerVo>>> liveData = new MutableLiveData<>();
+        liveData.setValue(NetworkModel.loading());
+        homeService.getHomeBannerData().enqueue(new Callback<NetworkModel<List<HomeBannerVo>>>() {
+            @Override
+            public void onResponse(@NonNull Call<NetworkModel<List<HomeBannerVo>>> call,
+                                   Response<NetworkModel<List<HomeBannerVo>>> response) {
+                if (response.isSuccessful()) {
+                    liveData.setValue(response.body());
+                } else {
+                    liveData.setValue(NetworkModel.failed(response.message(), response.code()));
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<NetworkModel<List<HomeBannerVo>>> call, @NonNull Throwable t) {
                 liveData.setValue(NetworkModel.failed(t.getMessage(), -1));
             }
         });

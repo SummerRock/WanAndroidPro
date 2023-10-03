@@ -1,9 +1,11 @@
 package com.example.myapplication.main.ui.home;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,7 +15,10 @@ import com.example.myapplication.base.fragment.BaseFragment;
 import com.example.myapplication.base.model.NetworkModel;
 import com.example.myapplication.base.view.BaseMultiStateConstant;
 import com.example.myapplication.databinding.FragmentHomeBinding;
-import com.example.myapplication.main.ui.home.view.HomeListAdapter;
+import com.example.myapplication.main.ui.home.model.HomeBannerWrap;
+import com.example.myapplication.main.ui.home.model.HomeModelVo;
+import com.example.myapplication.main.ui.home.view.HomeBannerViewBinder;
+import com.example.myapplication.main.ui.home.view.HomeItemViewBinder;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
@@ -23,10 +28,24 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import me.drakeet.multitype.MultiTypeAdapter;
+
 
 public class HomeFragment extends BaseFragment<HomeViewModel, FragmentHomeBinding> {
 
-    private final HomeListAdapter listAdapter = new HomeListAdapter(null);
+    // private final HomeListAdapter listAdapter = new HomeListAdapter(null);
+
+    private final List<Object> displayDataList = new ArrayList<>();
+    private final MultiTypeAdapter adapter = new MultiTypeAdapter();
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        displayDataList.add(null);
+    }
 
     @Override
     protected Class<HomeViewModel> getViewModelClass() {
@@ -40,11 +59,15 @@ public class HomeFragment extends BaseFragment<HomeViewModel, FragmentHomeBindin
 
     @Subscribe
     public void onCollectSuccessEvent(CollectChangeEvent event) {
-        for (int i = 0; i < listAdapter.getData().size(); i++) {
-            if (listAdapter.getData().get(i).getId().equals(event.id)) {
-                listAdapter.getData().get(i).setCollect(event.status);
-                listAdapter.notifyItemChanged(i);
-                break;
+        List<?> dataList = adapter.getItems();
+        for (int i = 0; i < dataList.size(); i++) {
+            if (dataList.get(i) instanceof HomeModelVo.DatasDTO) {
+                HomeModelVo.DatasDTO dataDTO = (HomeModelVo.DatasDTO) dataList.get(i);
+                if (dataDTO.getId().equals(event.id)) {
+                    dataDTO.setCollect(event.status);
+                    adapter.notifyItemChanged(i);
+                    break;
+                }
             }
         }
     }
@@ -63,7 +86,7 @@ public class HomeFragment extends BaseFragment<HomeViewModel, FragmentHomeBindin
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                int currentIndex = viewModel.getMutableLiveData().getValue();
+                int currentIndex = viewModel.getMutablePageIndexData().getValue();
                 viewModel.triggerHomeData(++currentIndex);
             }
         });
@@ -76,22 +99,34 @@ public class HomeFragment extends BaseFragment<HomeViewModel, FragmentHomeBindin
         // 将分割线添加到RecyclerView
         recyclerView.addItemDecoration(dividerItemDecoration);
 
-        recyclerView.setAdapter(listAdapter);
+        adapter.register(HomeModelVo.DatasDTO.class, new HomeItemViewBinder(null));
+        adapter.register(HomeBannerWrap.class, new HomeBannerViewBinder(null));
+
+        recyclerView.setAdapter(adapter);
         viewModel.triggerHomeData(0);
-        viewModel.getLiveData().observe(getViewLifecycleOwner(), homeModelVoNetworkModel -> {
+        viewModel.getHomeListLiveData().observe(getViewLifecycleOwner(), homeModelVoNetworkModel -> {
             if (homeModelVoNetworkModel.getNetStatus().equals(NetworkModel.NetStatus.SUCCESS)
                     && homeModelVoNetworkModel.data != null) {
                 refreshLayout.finishRefresh();
                 refreshLayout.finishLoadMore();
                 if (homeModelVoNetworkModel.data.getCurPage() == 1) {
-                    listAdapter.refreshData(homeModelVoNetworkModel.data.getDatas());
+                    displayDataList.clear();
+                    displayDataList.addAll(homeModelVoNetworkModel.data.getDatas());
+                    adapter.setItems(displayDataList);
+                    adapter.notifyDataSetChanged();
+                    // listAdapter.refreshData(homeModelVoNetworkModel.data.getDatas());
                 } else {
-                    listAdapter.addData(homeModelVoNetworkModel.data.getDatas());
+                    int originCount = adapter.getItemCount();
+                    int count = homeModelVoNetworkModel.data.getDatas().size();
+                    displayDataList.addAll(homeModelVoNetworkModel.data.getDatas());
+                    adapter.setItems(displayDataList);
+                    adapter.notifyItemRangeInserted(originCount + 1, count);
+                    // listAdapter.addData(homeModelVoNetworkModel.data.getDatas());
                 }
                 refreshLayout.setEnableLoadMore(!homeModelVoNetworkModel.data.getOver());
                 changeInnerStatus(BaseMultiStateConstant.hide);
             } else if (homeModelVoNetworkModel.getNetStatus().equals(NetworkModel.NetStatus.LOADING)) {
-                if (listAdapter.getItemCount() == 0) {
+                if (adapter.getItemCount() == 0) {
                     changeInnerStatus(BaseMultiStateConstant.Loading);
                 }
             } else {

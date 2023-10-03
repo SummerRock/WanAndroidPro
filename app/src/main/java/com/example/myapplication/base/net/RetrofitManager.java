@@ -20,6 +20,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitManager {
 
     private static final String BASE_URL = "https://www.wanandroid.com/";
+
+    /**
+     * 未登录的错误码
+     */
+    public static final int NOT_LOGON_ERROR_CODE = -1001;
+
     private static Retrofit retrofit;
 
     private RetrofitManager() {
@@ -54,6 +60,7 @@ public class RetrofitManager {
     }
 
     private static final String COOKIE_KEY = "local_cookie";
+
     public void clearCookie() {
         MMKVHelper.INSTANCE.getDefaultMMKV().remove(COOKIE_KEY);
     }

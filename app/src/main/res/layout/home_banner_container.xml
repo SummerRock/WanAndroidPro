@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.smarteist.autoimageslider.SliderView
+        android:id="@+id/imageSlider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:sliderAnimationDuration="600"
+        app:sliderAutoCycleDirection="back_and_forth"
+        app:sliderAutoCycleEnabled="true"
+        app:sliderIndicatorAnimationDuration="300"
+        app:sliderIndicatorGravity="center_horizontal"
+        app:sliderIndicatorMargin="16dp"
+        app:sliderIndicatorOrientation="horizontal"
+        app:sliderIndicatorRadius="4dp"
+        app:sliderIndicatorSelectedColor="#FF5722"
+        app:sliderIndicatorUnselectedColor="#888888"
+        app:sliderScrollTimeInSec="2"
+        app:sliderStartAutoCycle="true" />
+
+</FrameLayout>

@@ -61,6 +61,10 @@ dependencies { // 项目需要的依赖
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation 'androidx.databinding:databinding-runtime:8.0.1'
     // For developers using AndroidX in their applications
+    implementation 'me.drakeet.multitype:multitype:3.4.4'
+    implementation 'com.github.smarteist:autoimageslider:1.4.0'
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
     implementation "pub.devrel:easypermissions:$this.project.ext.easypermissions"
     implementation "org.greenrobot:eventbus:$this.project.ext.eventbus"
     implementation "com.squareup.retrofit2:retrofit:$this.project.ext.retrofitVersion"
