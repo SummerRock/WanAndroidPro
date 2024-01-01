@@ -2,6 +2,7 @@ apply plugin: 'com.android.application' // 引入 android gradle 插件
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply from: this.project.file('../config.gradle')
+apply plugin: "com.facebook.react"
 
 android { // 配置 android gradle plugin 需要的内容
     compileSdkVersion this.project.ext.compileSdkVersion
@@ -84,4 +85,9 @@ dependencies { // 项目需要的依赖
 
     /** 上拉刷新、下拉加载 **/
     implementation('com.scwang.smartrefresh:SmartRefreshLayout:1.1.0')
+
+    implementation "com.facebook.react:react-android"
+    implementation "com.facebook.react:hermes-android"
 }
+
+apply from: file("../../../WanAndroidPro/node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)

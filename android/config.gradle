@@ -1,8 +1,8 @@
 ext {
     // Define global versions
 
-    compileSdkVersion = 31
-    targetSdkVersion = 31
+    compileSdkVersion = 33
+    targetSdkVersion = 33
     minSdkVersion = 23
 
     appCompatVersion = '1.4.1'
