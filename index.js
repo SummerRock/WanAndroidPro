@@ -11,6 +11,7 @@ const HelloWorld = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: '#FF00FF',
         justifyContent: 'center',
     },
     hello: {

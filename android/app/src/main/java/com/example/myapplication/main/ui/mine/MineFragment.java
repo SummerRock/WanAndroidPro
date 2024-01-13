@@ -1,5 +1,6 @@
 package com.example.myapplication.main.ui.mine;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import com.example.myapplication.base.fragment.BaseFragment;
 import com.example.myapplication.base.login.LoginEvent;
 import com.example.myapplication.base.login.LoginManager;
 import com.example.myapplication.databinding.FragmentMineBinding;
+import com.example.myapplication.dynamic.MyReactActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -60,6 +62,15 @@ public class MineFragment extends BaseFragment<MineViewModel, FragmentMineBindin
             }
         });
         EventBus.getDefault().register(this);
+
+        View messageViewGroup = binding.myNotificationsLayout;
+        messageViewGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), MyReactActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
