@@ -70,11 +70,11 @@ dependencies { // 项目需要的依赖
     implementation "org.greenrobot:eventbus:$this.project.ext.eventbus"
     implementation "com.squareup.retrofit2:retrofit:$this.project.ext.retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$this.project.ext.retrofitVersion" // 如果需要使用 Gson 进行数据转换
-    implementation 'com.tencent:mmkv:1.2.10'
-    implementation 'androidx.preference:preference:1.2.0'
+    implementation "com.tencent:mmkv:$this.project.ext.mmkv"
+    implementation "androidx.preference:preference:$this.project.ext.preference"
 
-    implementation 'com.alibaba:arouter-api:1.5.1' // 请替换为最新版本号
-    kapt 'com.alibaba:arouter-compiler:1.5.1' // 请替换为最新版本号
+    implementation "com.alibaba:arouter-api:$this.project.ext.aRouter" // 请替换为最新版本号
+    kapt "com.alibaba:arouter-compiler:$this.project.ext.aRouter" // 请替换为最新版本号
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
