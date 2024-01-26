@@ -37,8 +37,8 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$this.project.ext.retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$this.project.ext.retrofitVersion" // 如果需要使用 Gson 进行数据转换
 
-    implementation 'com.alibaba:arouter-api:1.5.1' // 请替换为最新版本号
-    kapt 'com.alibaba:arouter-compiler:1.5.1' // 请替换为最新版本号
+    implementation "com.alibaba:arouter-api:$this.project.ext.aRouter" // 请替换为最新版本号
+    kapt "com.alibaba:arouter-compiler:$this.project.ext.aRouter" // 请替换为最新版本号
 
     implementation 'com.tencent:mmkv:1.2.10'
 
