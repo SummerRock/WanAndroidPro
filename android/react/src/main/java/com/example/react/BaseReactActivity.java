@@ -1,9 +1,12 @@
 package com.example.react;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.common.router.RouterConstants;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactPackage;
@@ -14,7 +17,8 @@ import com.facebook.soloader.SoLoader;
 
 import java.util.List;
 
-public class BaseReactActivity extends Activity implements DefaultHardwareBackBtnHandler {
+@Route(path = RouterConstants.REACT_ACTIVITY)
+public class BaseReactActivity extends AppCompatActivity implements DefaultHardwareBackBtnHandler {
     private ReactRootView mReactRootView;
     private ReactInstanceManager mReactInstanceManager;
 
@@ -29,6 +33,7 @@ public class BaseReactActivity extends Activity implements DefaultHardwareBackBt
         // packages.add(new MyReactNativePackage());
         // 同时需要手动把他们添加到`settings.gradle`和 `app/build.gradle`配置文件中。
 
+        String moduleName = getIntent().getStringExtra(RouterConstants.RouterKey.REACT_MODULE_NAME);
         mReactInstanceManager = ReactInstanceManager.builder()
                 .setApplication(getApplication())
                 .setCurrentActivity(this)
@@ -40,7 +45,7 @@ public class BaseReactActivity extends Activity implements DefaultHardwareBackBt
                 .build();
         // 注意这里的MyReactNativeApp 必须对应"index.js"中的
         // "AppRegistry.registerComponent()"的第一个参数
-        mReactRootView.startReactApplication(mReactInstanceManager, "MyReactNativeApp", null);
+        mReactRootView.startReactApplication(mReactInstanceManager, "MyReactNativeAppV2", null);
 
         setContentView(mReactRootView);
     }

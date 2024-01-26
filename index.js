@@ -8,6 +8,14 @@ const HelloWorld = () => {
         </View>
     );
 };
+
+const HelloWorldV2 = () => {
+    return (
+        <View style={styles.container}>
+            <Text style={styles.hello}>V2,Hello, World</Text>
+        </View>
+    );
+};
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -23,4 +31,8 @@ const styles = StyleSheet.create({
 AppRegistry.registerComponent(
     'MyReactNativeApp',
     () => HelloWorld,
+);
+AppRegistry.registerComponent(
+    'MyReactNativeAppV2',
+    () => HelloWorldV2,
 );

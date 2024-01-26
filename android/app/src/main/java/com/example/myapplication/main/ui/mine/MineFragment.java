@@ -1,6 +1,5 @@
 package com.example.myapplication.main.ui.mine;
 
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +11,11 @@ import com.example.myapplication.base.fragment.BaseFragment;
 import com.example.myapplication.base.login.LoginEvent;
 import com.example.myapplication.base.login.LoginManager;
 import com.example.myapplication.databinding.FragmentMineBinding;
-import com.example.react.BaseReactActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.Locale;
 
 
 public class MineFragment extends BaseFragment<MineViewModel, FragmentMineBinding> {
@@ -45,7 +45,7 @@ public class MineFragment extends BaseFragment<MineViewModel, FragmentMineBindin
         viewModel.getLoginInfo().observe(getViewLifecycleOwner(), loginVo -> {
             if (loginVo != null) {
                 userNameText.setText(loginVo.getUsername());
-                coinCountText.setText(String.format("金币数量: %d", loginVo.getCoinCount()));
+                coinCountText.setText(String.format(Locale.getDefault(), "金币数量: %d", loginVo.getCoinCount()));
             } else {
                 userNameText.setText("未登录");
                 coinCountText.setVisibility(View.GONE);
@@ -67,8 +67,10 @@ public class MineFragment extends BaseFragment<MineViewModel, FragmentMineBindin
         messageViewGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), BaseReactActivity.class);
-                startActivity(intent);
+                ARouter.getInstance()
+                        .build(RouterConstants.REACT_ACTIVITY)
+                        .withString(RouterConstants.RouterKey.REACT_MODULE_NAME, "MyReactNativeApp")
+                        .navigation();
             }
         });
     }
