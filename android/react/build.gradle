@@ -21,20 +21,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
 }
 
 dependencies {
 
     implementation "androidx.appcompat:appcompat:$this.project.ext.appCompatVersion"
-    implementation 'com.google.android.material:material:1.4.+'
+    implementation "com.google.android.material:material:$this.project.ext.material"
 
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    testImplementation "junit:junit:$this.project.ext.junit"
+    androidTestImplementation "androidx.test.ext:junit:$this.project.ext.ext_junit"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$this.project.ext.espresso_core"
 
     implementation "com.facebook.react:react-android"
     implementation "com.facebook.react:hermes-android"

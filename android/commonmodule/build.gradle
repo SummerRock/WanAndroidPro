@@ -41,7 +41,8 @@ dependencies {
     kapt 'com.alibaba:arouter-compiler:1.5.1' // 请替换为最新版本号
 
     implementation 'com.tencent:mmkv:1.2.10'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    testImplementation "junit:junit:$this.project.ext.junit"
+    androidTestImplementation "androidx.test.ext:junit:$this.project.ext.ext_junit"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$this.project.ext.espresso_core"
 }
