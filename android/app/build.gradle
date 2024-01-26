@@ -82,6 +82,7 @@ dependencies { // 项目需要的依赖
     //依赖本地library
     implementation project(path: ':commonmodule')
     implementation project(path: ':monitor')
+    implementation project(path: ':react')
 
     /** 上拉刷新、下拉加载 **/
     implementation('com.scwang.smartrefresh:SmartRefreshLayout:1.1.0')
@@ -89,5 +90,3 @@ dependencies { // 项目需要的依赖
     implementation "com.facebook.react:react-android"
     implementation "com.facebook.react:hermes-android"
 }
-
-apply from: file("../../../WanAndroidPro/node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)

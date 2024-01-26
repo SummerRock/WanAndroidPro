@@ -35,7 +35,7 @@ public class BaseReactActivity extends Activity implements DefaultHardwareBackBt
                 .setBundleAssetName("index.android.bundle")
                 .setJSMainModulePath("index")
                 .addPackages(packages)
-                .setUseDeveloperSupport(true) // TODO Build.Config
+                .setUseDeveloperSupport(BuildConfig.DEBUG)
                 .setInitialLifecycleState(LifecycleState.RESUMED)
                 .build();
         // 注意这里的MyReactNativeApp 必须对应"index.js"中的
