@@ -1,13 +1,6 @@
 import React from 'react';
 import {AppRegistry, StyleSheet, Text, View} from 'react-native';
-
-const HelloWorld = () => {
-    return (
-        <View style={styles.container}>
-            <Text style={styles.hello}>Hello, World</Text>
-        </View>
-    );
-};
+import App from "./app/pages/collection";
 
 const HelloWorldV2 = () => {
     return (
@@ -30,7 +23,7 @@ const styles = StyleSheet.create({
 
 AppRegistry.registerComponent(
     'my_collection',
-    () => HelloWorld,
+    () => App,
 );
 AppRegistry.registerComponent(
     'MyReactNativeAppV2',
