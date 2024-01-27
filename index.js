@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
 });
 
 AppRegistry.registerComponent(
-    'MyReactNativeApp',
+    'my_collection',
     () => HelloWorld,
 );
 AppRegistry.registerComponent(

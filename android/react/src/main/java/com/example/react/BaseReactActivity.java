@@ -45,7 +45,7 @@ public class BaseReactActivity extends AppCompatActivity implements DefaultHardw
                 .build();
         // 注意这里的MyReactNativeApp 必须对应"index.js"中的
         // "AppRegistry.registerComponent()"的第一个参数
-        mReactRootView.startReactApplication(mReactInstanceManager, "MyReactNativeAppV2", null);
+        mReactRootView.startReactApplication(mReactInstanceManager, moduleName, null);
 
         setContentView(mReactRootView);
     }

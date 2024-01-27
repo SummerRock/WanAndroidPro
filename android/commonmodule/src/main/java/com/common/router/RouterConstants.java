@@ -11,4 +11,8 @@ public class RouterConstants {
 
         String REACT_MODULE_NAME = "react_module_name";
     }
+
+    public interface ReactPageName {
+        String MY_COLLECTION = "my_collection";
+    }
 }

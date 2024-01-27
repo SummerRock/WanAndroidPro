@@ -64,15 +64,10 @@ public class MineFragment extends BaseFragment<MineViewModel, FragmentMineBindin
         EventBus.getDefault().register(this);
 
         View messageViewGroup = binding.myNotificationsLayout;
-        messageViewGroup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ARouter.getInstance()
-                        .build(RouterConstants.REACT_ACTIVITY)
-                        .withString(RouterConstants.RouterKey.REACT_MODULE_NAME, "MyReactNativeApp")
-                        .navigation();
-            }
-        });
+        messageViewGroup.setOnClickListener(v -> ARouter.getInstance()
+                .build(RouterConstants.REACT_ACTIVITY)
+                .withString(RouterConstants.RouterKey.REACT_MODULE_NAME, RouterConstants.ReactPageName.MY_COLLECTION)
+                .navigation());
     }
 
     @Override
