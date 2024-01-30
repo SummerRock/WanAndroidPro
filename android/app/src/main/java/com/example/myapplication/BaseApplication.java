@@ -6,6 +6,9 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.GlideBuilder;
@@ -17,11 +20,33 @@ import com.common.storage.MMKVHelper;
 import com.example.monitor.AppLifecycleListener;
 import com.example.myapplication.base.login.LoginManager;
 import com.example.myapplication.main.MainActivityV2;
+import com.facebook.react.PackageList;
+import com.facebook.react.ReactApplication;
+import com.facebook.react.ReactHost;
+import com.facebook.react.ReactNativeHost;
+import com.facebook.react.ReactPackage;
+import com.facebook.react.defaults.DefaultReactNativeHost;
+import com.facebook.soloader.SoLoader;
 
-public class BaseApplication extends Application {
+import java.util.List;
+
+public class BaseApplication extends Application implements ReactApplication {
 
     private static BaseApplication instance;
     private AppLifecycleListener appLifecycleListener;
+
+    private final ReactNativeHost mReactNativeHost = new DefaultReactNativeHost(this) {
+        @Override
+        public boolean getUseDeveloperSupport() {
+            return BuildConfig.DEBUG;
+        }
+
+        protected List<ReactPackage> getPackages() {
+            List<ReactPackage> packages = new PackageList(this).getPackages();
+            // Packages that cannot be autolinked yet can be added manually here
+            return packages;
+        }
+    };
 
     @Override
     public void onCreate() {
@@ -42,10 +67,12 @@ public class BaseApplication extends Application {
         addLifeCycleMonitor();
         setupCrashHandler();
         LoginManager.Companion.getInstance().init();
+        SoLoader.init(this, false);
     }
 
     /**
      * 在 onCreate() 方法之前调用
+     *
      * @param base The new base context for this wrapper.
      */
     @Override
@@ -95,5 +122,11 @@ public class BaseApplication extends Application {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC, System.currentTimeMillis() + 1000, pendingIntent);
         System.exit(2);
+    }
+
+    @NonNull
+    @Override
+    public ReactNativeHost getReactNativeHost() {
+        return mReactNativeHost;
     }
 }

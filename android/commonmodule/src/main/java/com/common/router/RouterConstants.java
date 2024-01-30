@@ -6,6 +6,8 @@ public class RouterConstants {
 
     public static final String REACT_ACTIVITY = "/react/activity";
 
+    public static final String REACT_FRAGMENT_ACTIVITY =  "/react_fragment/activity";
+
     public interface RouterKey {
         String DATA_KEY = "data_key";
 

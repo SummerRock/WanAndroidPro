@@ -68,6 +68,11 @@ public class MineFragment extends BaseFragment<MineViewModel, FragmentMineBindin
                 .build(RouterConstants.REACT_ACTIVITY)
                 .withString(RouterConstants.RouterKey.REACT_MODULE_NAME, RouterConstants.ReactPageName.MY_COLLECTION)
                 .navigation());
+        View collectionVG = binding.myFavoriteLayout;
+        collectionVG.setOnClickListener(v -> ARouter.getInstance()
+                .build(RouterConstants.REACT_FRAGMENT_ACTIVITY)
+                .withString("componentName", RouterConstants.ReactPageName.MY_COLLECTION)
+                .navigation());
     }
 
     @Override
