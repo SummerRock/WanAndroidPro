@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.bumptech.glide.Glide;
@@ -20,9 +19,9 @@ import com.common.storage.MMKVHelper;
 import com.example.monitor.AppLifecycleListener;
 import com.example.myapplication.base.login.LoginManager;
 import com.example.myapplication.main.MainActivityV2;
+import com.example.react.module.NetworkModulePackage;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
-import com.facebook.react.ReactHost;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.defaults.DefaultReactNativeHost;
@@ -44,6 +43,7 @@ public class BaseApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             List<ReactPackage> packages = new PackageList(this).getPackages();
             // Packages that cannot be autolinked yet can be added manually here
+            packages.add(new NetworkModulePackage());
             return packages;
         }
     };

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.common.router.RouterConstants;
+import com.example.react.module.NetworkModulePackage;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactPackage;
@@ -29,6 +30,7 @@ public class BaseReactActivity extends AppCompatActivity implements DefaultHardw
 
         mReactRootView = new ReactRootView(this);
         List<ReactPackage> packages = new PackageList(getApplication()).getPackages();
+        packages.add(new NetworkModulePackage());
         // 有一些第三方可能不能自动链接，对于这些包我们可以用下面的方式手动添加进来：
         // packages.add(new MyReactNativePackage());
         // 同时需要手动把他们添加到`settings.gradle`和 `app/build.gradle`配置文件中。

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {View, Text, FlatList, StyleSheet} from 'react-native';
 import {DataResp} from "./interface";
 import {commonFetch} from "../../common/network";
+import {NativeModules} from 'react-native';
 
 const App = () => {
 
@@ -21,6 +22,7 @@ const App = () => {
         // 这里可以执行副作用操作，类似于 componentDidMount 和 componentDidUpdate
         console.log('page-tag', 'componentDidMount')
         fetchData()
+        NativeModules.NetworkNativeModule.printLog();
         return () => {
             // 在组件卸载时执行一些清理操作，类似于 componentWillUnmount
         };
