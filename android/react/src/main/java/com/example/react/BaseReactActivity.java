@@ -87,7 +87,7 @@ public class BaseReactActivity extends AppCompatActivity implements DefaultHardw
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_MENU && mReactInstanceManager != null) {
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP && mReactInstanceManager != null) {
             mReactInstanceManager.showDevOptionsDialog();
             return true;
         }
