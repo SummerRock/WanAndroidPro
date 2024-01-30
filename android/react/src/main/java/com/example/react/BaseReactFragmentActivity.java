@@ -10,9 +10,11 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.common.router.RouterConstants;
 import com.facebook.react.ReactFragment;
+import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 
 @Route(path = RouterConstants.REACT_FRAGMENT_ACTIVITY)
-public class BaseReactFragmentActivity extends AppCompatActivity {
+public class BaseReactFragmentActivity extends AppCompatActivity implements DefaultHardwareBackBtnHandler {
+    // 必须要实现DefaultHardwareBackBtnHandler
 
     @Autowired
     String componentName;
@@ -28,6 +30,7 @@ public class BaseReactFragmentActivity extends AppCompatActivity {
         Fragment reactNativeFragment = new ReactFragment.Builder()
                 .setComponentName(componentName)
                 .setLaunchOptions(getLaunchOptions("test message"))
+                .setFabricEnabled(true)
                 .build();
 
         getSupportFragmentManager()
@@ -40,5 +43,10 @@ public class BaseReactFragmentActivity extends AppCompatActivity {
         Bundle initialProperties = new Bundle();
         initialProperties.putString("message", message);
         return initialProperties;
+    }
+
+    @Override
+    public void invokeDefaultOnBackPressed() {
+        super.onBackPressed();
     }
 }
