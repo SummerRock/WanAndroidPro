@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, Image, ScrollView, TextInput} from 'react-native';
+import {View, Text, FlatList, StyleSheet} from 'react-native';
 import {DataResp} from "./interface";
 import {commonFetch} from "../../common/network";
 
@@ -10,6 +10,7 @@ const App = () => {
     const fetchData = async () => {
         try {
             const result = await commonFetch<DataResp[]>('https://www.wanandroid.com/project/tree/json/');
+            console.log('page-tag-data', result.data)
             setResponseData(result.data);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -25,28 +26,36 @@ const App = () => {
         };
     }, [/* dependencies */]);
 
+    // 渲染每一项的函数
+    const renderItemView = ({item, index}) => (
+        <View style={styles.item}>
+            <Text style={{color: '#000000'}}>{index + ': ' + item.name}</Text>
+        </View>
+    );
+
     return (
-        <ScrollView>
-            <Text>我的收藏</Text>
-            <View>
-                <Text>{responseData?.length}</Text>
-                <Image
-                    source={{
-                        uri: 'https://reactnative.dev/docs/assets/p_cat2.png',
-                    }}
-                    style={{width: 200, height: 200}}
-                />
-            </View>
-            <TextInput
-                style={{
-                    height: 40,
-                    borderColor: 'gray',
-                    borderWidth: 1
-                }}
-                defaultValue="You can type in me"
+        <View style={styles.container}>
+            <Text>项目分类</Text>
+            <FlatList
+                data={responseData}
+                keyExtractor={item => item.id}
+                renderItem={renderItemView}
             />
-        </ScrollView>
+        </View>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        flexDirection: 'column',
+        paddingTop: 22
+    },
+    item: {
+        padding: 10,
+        fontSize: 18,
+        height: 44,
+    },
+});
 
 export default App;
