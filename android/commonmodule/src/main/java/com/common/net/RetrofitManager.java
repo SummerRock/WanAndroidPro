@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import androidx.annotation.NonNull;
 
 import com.common.json.GsonHelper;
+import com.common.list.CollectionUtils;
 import com.common.storage.MMKVHelper;
 import com.google.gson.reflect.TypeToken;
 
@@ -67,6 +68,23 @@ public class RetrofitManager {
 
     public void saveCookie(@NonNull List<Cookie> localCookies) {
         MMKVHelper.INSTANCE.getDefaultMMKV().encode(COOKIE_KEY, GsonHelper.toJson(localCookies));
+    }
+
+    public String getCookieStr() {
+        return cookieHeader(getCookie());
+    }
+
+    /** Returns a 'Cookie' HTTP request header with all cookies, like {@code a=b; c=d}. */
+    private String cookieHeader(List<Cookie> cookies) {
+        StringBuilder cookieHeader = new StringBuilder();
+        for (int i = 0, size = cookies.size(); i < size; i++) {
+            if (i > 0) {
+                cookieHeader.append("; ");
+            }
+            Cookie cookie = cookies.get(i);
+            cookieHeader.append(cookie.name()).append('=').append(cookie.value());
+        }
+        return cookieHeader.toString();
     }
 
     public List<Cookie> getCookie() {

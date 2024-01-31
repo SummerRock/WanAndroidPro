@@ -30,14 +30,18 @@ public class NetworkNativeModule extends ReactContextBaseJavaModule {
         LogUtils.d("network_test_log");
     }
 
+    /**
+     * 获取cookie
+     * @param token   对token应有一套安全校验机制
+     * @param promise js回调
+     */
     @ReactMethod
     public void requestNetworkCookieStr(
             String token,
             Promise promise) {
         try {
             WritableMap map = Arguments.createMap();
-            RetrofitManager.getInstance().getCookie();
-            map.putString("cookie", "test_cook");
+            map.putString("cookie", RetrofitManager.getInstance().getCookieStr());
             promise.resolve(map);
         } catch (IllegalViewOperationException e) {
             promise.reject("error_01", e);
