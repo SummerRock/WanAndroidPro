@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {View, Text, FlatList, StyleSheet} from 'react-native';
 import {DataResp} from "./interface";
 import {commonFetch} from "../../common/network";
-import {NativeModules} from 'react-native';
+import NetworkModule from "../../common/native/module";
 
 const App = () => {
 
@@ -10,8 +10,9 @@ const App = () => {
 
     const fetchData = async () => {
         try {
+            const { cookie } = await NetworkModule.requestNetworkCookieStr('test_token');
+            console.log('page-tag', cookie)
             const result = await commonFetch<DataResp[]>('https://www.wanandroid.com/project/tree/json/');
-            console.log('page-tag-data', result.data)
             setResponseData(result.data);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -22,7 +23,7 @@ const App = () => {
         // 这里可以执行副作用操作，类似于 componentDidMount 和 componentDidUpdate
         console.log('page-tag', 'componentDidMount')
         fetchData()
-        NativeModules.NetworkNativeModule.printLog();
+        NetworkModule.printLog();
         return () => {
             // 在组件卸载时执行一些清理操作，类似于 componentWillUnmount
         };
