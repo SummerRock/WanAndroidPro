@@ -1,4 +1,4 @@
-package com.example.myapplication.base.net;
+package com.common.net;
 
 import android.text.TextUtils;
 

@@ -1,4 +1,4 @@
-package com.example.myapplication.base.net
+package com.common.net
 
 import okhttp3.Interceptor
 import okhttp3.Response

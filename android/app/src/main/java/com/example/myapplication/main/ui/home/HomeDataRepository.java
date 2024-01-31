@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.myapplication.base.model.NetworkModel;
-import com.example.myapplication.base.net.RetrofitManager;
+import com.common.net.RetrofitManager;
 import com.example.myapplication.main.ui.home.model.HomeBannerVo;
 import com.example.myapplication.main.ui.home.model.HomeModelVo;
 

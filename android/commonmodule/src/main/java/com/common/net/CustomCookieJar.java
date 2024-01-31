@@ -1,9 +1,7 @@
-package com.example.myapplication.base.net;
+package com.common.net;
 
 import androidx.annotation.NonNull;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import okhttp3.Cookie;

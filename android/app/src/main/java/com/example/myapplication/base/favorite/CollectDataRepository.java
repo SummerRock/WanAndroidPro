@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import com.common.mainModule.ToastUtils;
 import com.example.myapplication.BaseApplication;
 import com.example.myapplication.base.model.NetworkModel;
-import com.example.myapplication.base.net.RetrofitManager;
+import com.common.net.RetrofitManager;
 
 import org.greenrobot.eventbus.EventBus;
 

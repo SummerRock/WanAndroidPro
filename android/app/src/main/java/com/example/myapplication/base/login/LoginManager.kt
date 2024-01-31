@@ -13,7 +13,7 @@ import com.example.myapplication.R
 import com.example.myapplication.base.login.model.LoginVo
 import com.example.myapplication.base.model.EmptyVo
 import com.example.myapplication.base.model.NetworkModel
-import com.example.myapplication.base.net.RetrofitManager
+import com.common.net.RetrofitManager
 import org.greenrobot.eventbus.EventBus
 import retrofit2.Call
 import retrofit2.Callback

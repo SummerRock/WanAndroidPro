@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.common.mainModule.LogUtils;
+import com.common.net.RetrofitManager;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -35,6 +36,7 @@ public class NetworkNativeModule extends ReactContextBaseJavaModule {
             Promise promise) {
         try {
             WritableMap map = Arguments.createMap();
+            RetrofitManager.getInstance().getCookie();
             map.putString("cookie", "test_cook");
             promise.resolve(map);
         } catch (IllegalViewOperationException e) {
