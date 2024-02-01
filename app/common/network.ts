@@ -21,9 +21,19 @@ export async function commonFetch<T>(url: string, options?: RequestInit): Promis
         });
         const data: ApiResponse<T> = await response.json();
 
-        if (!response.ok || !data.data) {
+        if (!response.ok) {
             console.error('network-err', 'request-failed')
-            throw new Error(data.errorMsg || '请求失败');
+            throw new Error(data.errorMsg || '网络请求失败');
+        }
+
+        if (data.errorCode === -1001) {
+            console.error('network-err', 'login-failed')
+            throw new Error(data.errorMsg || '请先登录！');
+        }
+
+        if (!data.data) {
+            console.error('network-err', 'no-data')
+            throw new Error(data.errorMsg || '未返回数据！');
         }
 
         return data;
