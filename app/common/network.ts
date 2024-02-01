@@ -18,6 +18,13 @@ export async function commonFetch<T>(url: string, options?: RequestInit): Promis
                 'Content-Type': 'application/json',
                 'Cookie': cookie, // 在这里添加Cookie
             },
+            credentials: 'omit',
+            // 在 Fetch API 中，credentials 是一个可选的配置参数，用于控制在请求中是否包含凭据（credentials）。
+            // 凭据通常包括 Cookie、HTTP 认证以及客户端 SSL 证书等信息。credentials 参数有三个可能的值：
+            // "omit"（默认值）： 表示不包含任何凭据信息。在跨域请求时，浏览器默认不会发送 Cookie 等凭据信息，以确保安全性。
+            // "same-origin"： 表示在同源请求中包含凭据信息，但是在跨域请求中不包含。这可以确保在同源请求中能够使用 Cookie 等凭据，但不会在跨域请求中泄漏凭据。
+            // "include"： 表示在同源请求和跨域请求中都包含凭据信息。这意味着浏览器会发送包括 Cookie 在内的凭据信息，确保在跨域请求时可以使用凭据。
+            // 这里使用omit omit能发送完整的cookie到网络请求中，其他的不可以，原因未知
         });
         const data: ApiResponse<T> = await response.json();
 
