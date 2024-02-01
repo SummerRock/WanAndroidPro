@@ -1,15 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, FlatList, StyleSheet} from 'react-native';
-import {DataResp} from "./interface";
+import {CollectionData} from "./interface";
 import {commonFetch} from "../../common/network";
 
 const App = () => {
 
-    const [responseData, setResponseData] = useState<DataResp[]>([]);
+    const [responseData, setResponseData] = useState<CollectionData>(null);
 
     const fetchData = async () => {
         try {
-            const result = await commonFetch<DataResp[]>('https://www.wanandroid.com/project/tree/json/');
+            const result = await commonFetch<CollectionData>('https://www.wanandroid.com/lg/collect/list/0/json/');
             setResponseData(result.data);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -28,18 +28,20 @@ const App = () => {
     // 渲染每一项的函数
     const renderItemView = ({item, index}) => (
         <View style={styles.item}>
-            <Text style={{color: '#000000'}}>{index + ': ' + item.name}</Text>
+            <Text style={{color: '#000000'}}>{index + ': ' + item.title}</Text>
         </View>
     );
 
     return (
         <View style={styles.container}>
-            <Text>项目分类</Text>
-            <FlatList
-                data={responseData}
-                keyExtractor={item => item.id}
-                renderItem={renderItemView}
-            />
+            <Text>我的收藏</Text>
+            {
+                (responseData?.datas || []).length > 0 && <FlatList
+                    data={responseData.datas}
+                    keyExtractor={item => item.id}
+                    renderItem={renderItemView}
+                />
+            }
         </View>
     );
 }
