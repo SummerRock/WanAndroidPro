@@ -1,17 +1,22 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, FlatList, StyleSheet} from 'react-native';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {CollectionData} from "./interface";
-import {commonFetch} from "../../common/network";
+import {commonFetch, NetStatus} from "../../common/network";
+import ApiStatus from "../../common/component/apiStatus";
 
 const App = () => {
 
     const [responseData, setResponseData] = useState<CollectionData>(null);
+    const [status, setStatus] = useState<NetStatus>(NetStatus.LOADING);
 
     const fetchData = async () => {
         try {
+            setStatus(NetStatus.LOADING)
             const result = await commonFetch<CollectionData>('https://www.wanandroid.com/lg/collect/list/0/json/');
+            setStatus(NetStatus.SUCCESS)
             setResponseData(result.data);
         } catch (error) {
+            setStatus(NetStatus.FAILED)
             console.error('Error fetching data:', error);
         }
     };
@@ -35,6 +40,7 @@ const App = () => {
     return (
         <View style={styles.container}>
             <Text>我的收藏</Text>
+            <ApiStatus apiStatus={status}/>
             {
                 (responseData?.datas || []).length > 0 && <FlatList
                     data={responseData.datas}
