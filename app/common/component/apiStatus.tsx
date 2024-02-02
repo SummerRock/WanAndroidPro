@@ -1,8 +1,13 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {NetStatus} from "../network";
 
-const ApiStatus = (props: { apiStatus: NetStatus }) => {
+const ApiStatus = (props: {
+    apiStatus: NetStatus,
+    failCallback: () => void,
+    errorMsg?: string,
+    component?: ReactNode
+}) => {
 
     return (
         <View style={styles.container}>
@@ -11,11 +16,17 @@ const ApiStatus = (props: { apiStatus: NetStatus }) => {
             )}
 
             {props.apiStatus === NetStatus.SUCCESS && (
-                <Text style={styles.successText}>Request successful!</Text>
+                <View>{props.component}</View>
             )}
 
             {props.apiStatus === NetStatus.FAILED && (
-                <Text style={styles.errorText}>Request failed. Please try again.</Text>
+                <TouchableOpacity onPress={() => {
+                    if (props.failCallback) {
+                        props.failCallback()
+                    }
+                }}>
+                    <Text style={styles.errorText}>{props.errorMsg || 'Request failed. Please try again.'}</Text>
+                </TouchableOpacity>
             )}
         </View>
     );
@@ -24,7 +35,6 @@ const ApiStatus = (props: { apiStatus: NetStatus }) => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#fff',
-        padding: 20,
         alignItems: 'center',
         justifyContent: 'center',
     },

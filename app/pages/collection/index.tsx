@@ -23,7 +23,6 @@ const App = () => {
 
     useEffect(() => {
         // 这里可以执行副作用操作，类似于 componentDidMount 和 componentDidUpdate
-        console.log('page-tag', 'componentDidMount')
         fetchData()
         return () => {
             // 在组件卸载时执行一些清理操作，类似于 componentWillUnmount
@@ -37,17 +36,26 @@ const App = () => {
         </View>
     );
 
+    const listView = () => {
+        if ((responseData?.datas || []).length > 0) {
+            return <FlatList
+                data={responseData.datas}
+                keyExtractor={item => item.id}
+                renderItem={renderItemView}
+            />
+        } else {
+            return null;
+        }
+    }
+
     return (
         <View style={styles.container}>
-            <Text>我的收藏</Text>
-            <ApiStatus apiStatus={status}/>
-            {
-                (responseData?.datas || []).length > 0 && <FlatList
-                    data={responseData.datas}
-                    keyExtractor={item => item.id}
-                    renderItem={renderItemView}
-                />
-            }
+            <Text>我的收藏-React Native</Text>
+            <ApiStatus apiStatus={status}
+                       failCallback={fetchData}
+                       errorMsg={'请求失败，请重试或重新登陆'}
+                       component={listView()}/>
+
         </View>
     );
 }
