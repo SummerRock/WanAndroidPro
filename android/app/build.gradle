@@ -12,7 +12,7 @@ android { // 配置 android gradle plugin 需要的内容
         minSdkVersion this.project.ext.minSdkVersion
         targetSdkVersion this.project.ext.targetSdkVersion
         versionCode 1
-        versionName "1.0"
+        versionName "1.2"
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -21,6 +21,30 @@ android { // 配置 android gradle plugin 需要的内容
         }
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        release {
+            if (project.hasProperty("MYAPP_RELEASE_STORE_FILE")) {
+                storeFile file(MYAPP_RELEASE_STORE_FILE)
+                storePassword MYAPP_RELEASE_STORE_PASSWORD
+                keyAlias MYAPP_RELEASE_KEY_ALIAS
+                keyPassword MYAPP_RELEASE_KEY_PASSWORD
+            }
+        }
+    }
+
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'armeabi-v7a', 'x86', 'arm64-v8a', 'x86_64'
+            universalApk false
+        }
+    }
+
+    aaptOptions {
+        cruncherEnabled = false
     }
 
     dataBinding {
@@ -37,7 +61,9 @@ android { // 配置 android gradle plugin 需要的内容
         }
 
         release {
-            minifyEnabled false
+            minifyEnabled true
+            signingConfig signingConfigs.release
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
