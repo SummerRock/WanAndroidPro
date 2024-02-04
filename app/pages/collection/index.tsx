@@ -8,6 +8,7 @@ const App = () => {
 
     const [responseData, setResponseData] = useState<CollectionData>(null);
     const [status, setStatus] = useState<NetStatus>(NetStatus.LOADING);
+    const [errorMsg, setErrorMsg] = useState<string>('请求失败，请重试或重新登陆');
 
     const fetchData = async () => {
         try {
@@ -15,8 +16,9 @@ const App = () => {
             const result = await commonFetch<CollectionData>('https://www.wanandroid.com/lg/collect/list/0/json/');
             setStatus(NetStatus.SUCCESS)
             setResponseData(result.data);
-        } catch (error) {
+        } catch (error: Error) {
             setStatus(NetStatus.FAILED)
+            setErrorMsg(error.message)
             console.error('Error fetching data:', error);
         }
     };
@@ -57,7 +59,7 @@ const App = () => {
             <Text>我的收藏-React Native</Text>
             <ApiStatus apiStatus={status}
                        failCallback={fetchData}
-                       errorMsg={'请求失败，请重试或重新登陆'}
+                       errorMsg={errorMsg}
                        component={listView()}/>
 
         </View>

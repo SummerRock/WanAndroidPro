@@ -13,9 +13,37 @@ interface ApiResponse<T> {
     errorCode: number
 }
 
+export class NetworkError extends Error {
+    // 新增一个错误码属性
+    private readonly errorCode: number;
+
+    constructor(message: string, errorCode: number) {
+        // 调用父类的构造函数，并传入错误消息
+        super(message);
+
+
+        // 设置错误的名称，这是可选的
+        this.name = 'NetworkError';
+
+        // 设置错误码
+        this.errorCode = errorCode;
+
+        // 设置堆栈跟踪信息，这也是可选的
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, NetworkError);
+        }
+    }
+
+    // 添加一个方法用于获取错误码
+    getErrorCode(): number {
+        return this.errorCode;
+    }
+}
+
+
 // 封装的 fetch 函数
 export async function commonFetch<T>(url: string, options?: RequestInit): Promise<ApiResponse<T>> {
-    const { cookie } = await NetworkModule.requestNetworkCookieStr('test_token');
+    const {cookie} = await NetworkModule.requestNetworkCookieStr('test_token');
     // console.log('cookie-tag', cookie)
     const response: Response = await fetch(url, {
         ...options,
@@ -35,17 +63,17 @@ export async function commonFetch<T>(url: string, options?: RequestInit): Promis
 
     if (!response.ok) {
         console.error('network-err', 'request-failed')
-        throw new Error(data.errorMsg || '网络请求失败');
+        throw new NetworkError(data.errorMsg || '网络请求失败', data.errorCode);
     }
 
     if (data.errorCode === -1001) {
         console.error('network-err', 'login-failed')
-        throw new Error(data.errorMsg || '请先登录！');
+        throw new NetworkError(data.errorMsg || '请先登录！', data.errorCode);
     }
 
     if (!data.data) {
         console.error('network-err', 'no-data')
-        throw new Error(data.errorMsg || '未返回数据！');
+        throw new NetworkError(data.errorMsg || '未返回数据！', -1);
     }
 
     return data;
