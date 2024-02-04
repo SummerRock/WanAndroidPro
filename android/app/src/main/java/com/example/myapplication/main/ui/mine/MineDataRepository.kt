@@ -17,7 +17,7 @@ class MineDataRepository private constructor() {
 
     fun queryUnreadMessageCount(str: String?): MutableLiveData<NetworkModel<Int?>> {
         val liveData = MutableLiveData<NetworkModel<Int?>>()
-        liveData.setValue(NetworkModel.loading())
+        liveData.value = NetworkModel.loading()
         service.unreadMessageCount.enqueue(object : Callback<NetworkModel<Int?>?> {
             override fun onResponse(
                 call: Call<NetworkModel<Int?>?>,
@@ -31,7 +31,7 @@ class MineDataRepository private constructor() {
             }
 
             override fun onFailure(call: Call<NetworkModel<Int?>?>, t: Throwable) {
-                liveData.setValue(NetworkModel.failed(t.message, -1))
+                liveData.value = NetworkModel.failed(t.message, -1)
             }
         })
         return liveData
