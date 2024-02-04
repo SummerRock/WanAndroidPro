@@ -1,5 +1,5 @@
 import React, {ReactNode} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet, ActivityIndicator} from 'react-native';
 import {NetStatus} from "../network";
 
 const ApiStatus = (props: {
@@ -12,7 +12,10 @@ const ApiStatus = (props: {
     return (
         <View style={styles.container}>
             {props.apiStatus === NetStatus.LOADING && (
-                <Text style={styles.loadingText}>Loading...</Text>
+                <View>
+                    <ActivityIndicator size="large" color="#0000ff"/>
+                    <Text style={styles.loadingText}>Loading...</Text>
+                </View>
             )}
 
             {props.apiStatus === NetStatus.SUCCESS && (
@@ -34,7 +37,7 @@ const ApiStatus = (props: {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#fff',
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
     },

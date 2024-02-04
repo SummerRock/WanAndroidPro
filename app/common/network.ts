@@ -16,7 +16,7 @@ interface ApiResponse<T> {
 // 封装的 fetch 函数
 export async function commonFetch<T>(url: string, options?: RequestInit): Promise<ApiResponse<T>> {
     const { cookie } = await NetworkModule.requestNetworkCookieStr('test_token');
-    console.log('cookie-tag', cookie)
+    // console.log('cookie-tag', cookie)
     const response: Response = await fetch(url, {
         ...options,
         headers: {
