@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet, Text, View, Linking, TouchableOpacity} from 'react-native';
 import {CollectionData} from "./interface";
 import {commonFetch, NetStatus} from "../../common/network";
 import ApiStatus from "../../common/component/apiStatus";
@@ -31,9 +31,13 @@ const App = () => {
 
     // 渲染每一项的函数
     const renderItemView = ({item, index}) => (
-        <View style={styles.item}>
-            <Text style={{color: '#000000'}}>{index + ': ' + item.title}</Text>
-        </View>
+        <TouchableOpacity onPress={() => {
+            Linking.openURL(item.link).catch((err) => console.error('An error occurred', err));
+        }}>
+            <View style={styles.item}>
+                <Text style={{color: '#000000'}}>{index + ': ' + item.title}</Text>
+            </View>
+        </TouchableOpacity>
     );
 
     const listView = () => {
