@@ -65,14 +65,19 @@ public class MineFragment extends BaseFragment<MineViewModel, FragmentMineBindin
 
         View messageViewGroup = binding.myNotificationsLayout;
         messageViewGroup.setOnClickListener(v -> ARouter.getInstance()
-                .build(RouterConstants.REACT_ACTIVITY)
+                .build(RouterConstants.REACT_FRAGMENT_ACTIVITY)
                 .withString(RouterConstants.RouterKey.REACT_MODULE_NAME, RouterConstants.ReactPageName.MY_COLLECTION)
                 .navigation());
         View collectionVG = binding.myFavoriteLayout;
         collectionVG.setOnClickListener(v -> ARouter.getInstance()
-                .build(RouterConstants.REACT_FRAGMENT_ACTIVITY)
-                .withString("componentName", RouterConstants.ReactPageName.MY_COLLECTION)
+                .build(RouterConstants.REACT_ACTIVITY)
+                .withString(RouterConstants.RouterKey.REACT_MODULE_NAME, RouterConstants.ReactPageName.MY_COLLECTION)
                 .navigation());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
