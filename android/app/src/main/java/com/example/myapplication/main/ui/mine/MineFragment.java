@@ -5,11 +5,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.lifecycle.Observer;
+
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.common.router.RouterConstants;
 import com.example.myapplication.base.fragment.BaseFragment;
 import com.example.myapplication.base.login.LoginEvent;
 import com.example.myapplication.base.login.LoginManager;
+import com.example.myapplication.base.model.NetworkModel;
 import com.example.myapplication.databinding.FragmentMineBinding;
 
 import org.greenrobot.eventbus.EventBus;
@@ -42,6 +45,14 @@ public class MineFragment extends BaseFragment<MineViewModel, FragmentMineBindin
         });
         final TextView userNameText = binding.profileName;
         final TextView coinCountText = binding.userCoinCount;
+        viewModel.getMessageCountLiveData().observe(getViewLifecycleOwner(), new Observer<NetworkModel<Integer>>() {
+            @Override
+            public void onChanged(NetworkModel<Integer> integerNetworkModel) {
+                int count = integerNetworkModel != null && integerNetworkModel.data != null ? integerNetworkModel.data : 0;
+                binding.myMessageCountTv.setText(String.format(Locale.getDefault(), "(%d)", count));
+                binding.myNotificationsLayout.setClickable(count > 0);
+            }
+        });
         viewModel.getLoginInfo().observe(getViewLifecycleOwner(), loginVo -> {
             if (loginVo != null) {
                 userNameText.setText(loginVo.getUsername());
@@ -55,9 +66,6 @@ public class MineFragment extends BaseFragment<MineViewModel, FragmentMineBindin
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-//                        Uri.parse("package:" + requireActivity().getPackageName()));
-//                launcher.launch(intent);
                 ARouter.getInstance().build(RouterConstants.SETTING_ACTIVITY).navigation();
             }
         });
@@ -78,6 +86,7 @@ public class MineFragment extends BaseFragment<MineViewModel, FragmentMineBindin
     @Override
     public void onResume() {
         super.onResume();
+        viewModel.triggerMessageCount();
     }
 
     @Override
