@@ -3,8 +3,9 @@ import {FlatList, StyleSheet, Text, View, Linking, TouchableOpacity} from 'react
 import {CollectionData} from "./interface";
 import {commonFetch, NetStatus} from "../../common/network";
 import ApiStatus from "../../common/component/apiStatus";
+import {Constants} from "../../common/constants";
 
-const App = () => {
+const App = (initialProps) => {
 
     const [responseData, setResponseData] = useState<CollectionData>(null);
     const [status, setStatus] = useState<NetStatus>(NetStatus.LOADING);
@@ -24,6 +25,11 @@ const App = () => {
     };
 
     useEffect(() => {
+        // 在组件挂载后，获取 initialProperties 中的数据
+        const key1 = initialProps[Constants.App_Version] || 'test_key1';
+        // 在这里进行处理
+        console.log('Received initial properties:', key1);
+
         // 这里可以执行副作用操作，类似于 componentDidMount 和 componentDidUpdate
         fetchData()
         return () => {
