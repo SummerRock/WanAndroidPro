@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {FlatList, StyleSheet, Text, View, Linking, TouchableOpacity} from 'react-native';
-import {CollectionData} from "./interface";
+import {CollectionData, CollectionItem} from "./interface";
 import {commonFetch, NetStatus} from "../../common/network";
 import ApiStatus from "../../common/component/apiStatus";
 import {Constants} from "../../common/constants";
@@ -38,7 +38,7 @@ const App = (initialProps) => {
     }, [/* dependencies */]);
 
     // 渲染每一项的函数
-    const renderItemView = ({item, index}) => (
+    const renderItemView = ({item, index}: { item: CollectionItem }) => (
         <TouchableOpacity onPress={() => {
             Linking.openURL(item.link).catch((err) => console.error('An error occurred', err));
         }}>
