@@ -16,5 +16,7 @@ public class RouterConstants {
 
     public interface ReactPageName {
         String MY_COLLECTION = "my_collection";
+
+        String MY_MESSAGE = "my_message";
     }
 }

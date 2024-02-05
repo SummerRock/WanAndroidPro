@@ -50,7 +50,6 @@ public class MineFragment extends BaseFragment<MineViewModel, FragmentMineBindin
             public void onChanged(NetworkModel<Integer> integerNetworkModel) {
                 int count = integerNetworkModel != null && integerNetworkModel.data != null ? integerNetworkModel.data : 0;
                 binding.myMessageCountTv.setText(String.format(Locale.getDefault(), "(%d)", count));
-                binding.myNotificationsLayout.setClickable(count > 0);
             }
         });
         viewModel.getLoginInfo().observe(getViewLifecycleOwner(), loginVo -> {
@@ -73,8 +72,8 @@ public class MineFragment extends BaseFragment<MineViewModel, FragmentMineBindin
 
         View messageViewGroup = binding.myNotificationsLayout;
         messageViewGroup.setOnClickListener(v -> ARouter.getInstance()
-                .build(RouterConstants.REACT_FRAGMENT_ACTIVITY)
-                .withString(RouterConstants.RouterKey.REACT_MODULE_NAME, RouterConstants.ReactPageName.MY_COLLECTION)
+                .build(RouterConstants.REACT_ACTIVITY)
+                .withString(RouterConstants.RouterKey.REACT_MODULE_NAME, RouterConstants.ReactPageName.MY_MESSAGE)
                 .navigation());
         View collectionVG = binding.myFavoriteLayout;
         collectionVG.setOnClickListener(v -> ARouter.getInstance()
