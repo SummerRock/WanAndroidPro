@@ -60,6 +60,6 @@ const FlatListBasics = ({dispatch, dataV2}) => {
 
 export default connect(({example}) => {
     return {
-        dataV2: example?.data,
+        dataV2: example?.readMessageData,
     };
 })(FlatListBasics);

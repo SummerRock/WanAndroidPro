@@ -4,20 +4,21 @@ import {MessageData} from "../model";
 export default {
     namespace: 'example',
     state: {
-        data: [],
         readMessageData: null,
     },
     reducers: {
         save(state, {payload}) {
-            const { data } = payload
-            console.log('xiayan-data', data.data)
-            return {...state, ...payload};
+            const {data} = payload
+            return {
+                ...state,
+                readMessageData: {...data}
+            };
         },
     },
     effects: {
         * fetchData({payload}, {call, put}) {
             // 异步请求数据的逻辑
-            const data = yield call(fetchDataFromApi);
+            const data: MessageData = yield call(commonFetch, 'https://wanandroid.com/message/lg/readed_list/1/json', null);
             // 将数据保存到 state 中
             console.log('xiayan-fetchData', data)
             yield put({type: 'save', payload: {data}});
