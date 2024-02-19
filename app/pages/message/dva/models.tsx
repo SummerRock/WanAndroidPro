@@ -1,6 +1,16 @@
 import {commonFetch} from "../../../common/network";
 import {MessageData} from "../model";
 
+export interface MessageState {
+    readMessageData: MessageData
+    pageName: string
+}
+
+const defaultState: MessageState = {
+    readMessageData: null,
+    pageName: ''
+} as MessageState
+
 export default {
     namespace: 'example',
     state: {
@@ -11,17 +21,18 @@ export default {
             const {data} = payload
             return {
                 ...state,
-                readMessageData: {...data}
+                readMessageData: data
             };
         },
     },
     effects: {
         * fetchData({payload}, {call, put}) {
+            const page = parseInt(payload || '1')
             // 异步请求数据的逻辑
-            const data: MessageData = yield call(commonFetch, 'https://wanandroid.com/message/lg/readed_list/1/json', null);
+            const url = `https://wanandroid.com/message/lg/readed_list/${page}/json`;
+            const response = yield call(commonFetch, url, null);
             // 将数据保存到 state 中
-            console.log('xiayan-fetchData', data)
-            yield put({type: 'save', payload: {data}});
+            yield put({type: 'save', payload: {data: response?.data}});
         },
     },
 };

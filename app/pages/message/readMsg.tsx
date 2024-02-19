@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {FlatList, Linking, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {MessageItem} from "./model";
+import {MessageData, MessageItem} from "./model";
 import {connect} from 'react-redux';
 import example from "./dva/models";
 
@@ -26,12 +26,12 @@ const renderItemView = ({item, index}: { item: MessageItem }) => (
     </TouchableOpacity>
 );
 
-const FlatListBasics = ({dispatch, dataV2}) => {
+const FlatListBasics = ({dispatch, dataV2} : {davaV2: MessageData}) => {
+    const data: MessageData = dataV2
     useEffect(() => {
-        console.log('xiayan-dispatch', dataV2)
         dispatch({
             type: 'example/fetchData',
-            payload: 'pay_v1'
+            payload: '1'
         })
         return () => {
             // 在组件卸载时执行一些清理操作，类似于 componentWillUnmount
@@ -39,21 +39,10 @@ const FlatListBasics = ({dispatch, dataV2}) => {
     }, [/* dependencies */]);
     return (
         <View style={styles.container}>
-            <FlatList
-                data={[
-                    {key: 'Devin'},
-                    {key: 'Dan'},
-                    {key: 'Dominic'},
-                    {key: 'Jackson'},
-                    {key: 'James'},
-                    {key: 'Joel'},
-                    {key: 'John'},
-                    {key: 'Jillian'},
-                    {key: 'Jimmy'},
-                    {key: 'Julie'},
-                ]}
-                renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}
-            />
+            {(data?.datas || []).length > 0 && <FlatList
+                data={data?.datas}
+                renderItem={renderItemView}
+            />}
         </View>
     );
 }
