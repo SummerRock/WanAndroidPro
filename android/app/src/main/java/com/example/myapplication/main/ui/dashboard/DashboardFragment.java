@@ -18,14 +18,17 @@ public class DashboardFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        DashboardViewModel dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
+        DashboardViewModel viewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
 
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textDashboard;
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        viewModel.getCounterModelLiveData().observe(getViewLifecycleOwner(), counterModel -> {
+            textView.setText(String.valueOf(counterModel.getCount()));
+        });
+        binding.testIncrementBtn.setOnClickListener(v -> viewModel.processIntent(new CounterIntent.Increment()));
+        binding.testDecrementBtn.setOnClickListener(v -> viewModel.processIntent(new CounterIntent.Decrement()));
         return root;
     }
 
