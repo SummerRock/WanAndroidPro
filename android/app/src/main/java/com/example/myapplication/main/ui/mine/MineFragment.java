@@ -50,7 +50,7 @@ public class MineFragment extends BaseFragment<MineViewModel, FragmentMineBindin
         coinCountText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(FlutterActivity.createDefaultIntent(requireContext()));
+                startActivity(FlutterActivity.withNewEngine().initialRoute("/coin_rank").build(requireContext()));
             }
         });
         viewModel.getMessageCountLiveData().observe(getViewLifecycleOwner(), new Observer<NetworkModel<Integer>>() {
