@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <activity
+            android:name=".BaseReactFragmentActivity"
+            android:exported="true" />
+        <!-- 不能设置 android:exported="false"，不然ARouter跳转会失效！！！ -->
+        <activity
+            android:name=".BaseReactActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+    </application>
+
+</manifest>

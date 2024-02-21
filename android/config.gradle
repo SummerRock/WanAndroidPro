@@ -1,0 +1,22 @@
+ext {
+    // Define global versions
+
+    compileSdkVersion = 33
+    targetSdkVersion = 33
+    minSdkVersion = 23
+
+    junit = '4.12'
+    ext_junit = '1.1.1'
+    espresso_core = '3.2.0'
+
+    appCompatVersion = '1.4.1'
+    material = '1.4.0'
+    vectordrawable = '1.1.0'
+    preference = '1.2.1'
+    constraintlayout = '1.1.3'
+    retrofitVersion = '2.9.0'
+    easypermissions = '3.0.0'
+    eventbus = '3.2.0'
+    aRouter = '1.5.1'
+    mmkv = '1.2.10'
+}
