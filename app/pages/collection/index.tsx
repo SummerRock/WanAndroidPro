@@ -1,19 +1,22 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, StyleSheet, Text, View, Linking, TouchableOpacity} from 'react-native';
+import {FlatList, Linking, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {CollectionData, CollectionItem} from "./interface";
 import {commonFetch, NetStatus} from "../../common/network";
 import ApiStatus from "../../common/component/apiStatus";
-import {Constants} from "../../common/constants";
+import {Constants, ListInterActStatus} from "../../common/constants";
 
 const App = (initialProps) => {
 
     const [responseData, setResponseData] = useState<CollectionData>(null);
     const [status, setStatus] = useState<NetStatus>(NetStatus.LOADING);
     const [errorMsg, setErrorMsg] = useState<string>('请求失败，请重试或重新登陆');
+    const [listInterActStatus, setListInterActStatus] = useState(ListInterActStatus.normal);
 
     const fetchData = async () => {
         try {
-            setStatus(NetStatus.LOADING)
+            if (!responseData) {
+                setStatus(NetStatus.LOADING)
+            }
             const result = await commonFetch<CollectionData>('https://www.wanandroid.com/lg/collect/list/0/json/');
             setStatus(NetStatus.SUCCESS)
             setResponseData(result.data);
@@ -48,12 +51,28 @@ const App = (initialProps) => {
         </TouchableOpacity>
     );
 
+    const onRefresh = () => {
+        if (listInterActStatus != ListInterActStatus.normal) {
+            return
+        }
+        setListInterActStatus(ListInterActStatus.refreshing);
+        // 刷新操作
+        fetchData().then(() => {
+            setListInterActStatus(ListInterActStatus.normal);
+        })
+            .catch(error => {
+                setListInterActStatus(ListInterActStatus.normal);
+            });
+    };
+
     const listView = () => {
         if ((responseData?.datas || []).length > 0) {
             return <FlatList
                 data={responseData.datas}
                 keyExtractor={item => item.id}
                 renderItem={renderItemView}
+                onRefresh={onRefresh}
+                refreshing={listInterActStatus === ListInterActStatus.refreshing}
             />
         } else {
             return null;
