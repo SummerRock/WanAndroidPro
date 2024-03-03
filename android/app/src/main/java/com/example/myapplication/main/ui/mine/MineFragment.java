@@ -20,6 +20,8 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Locale;
 
+import io.flutter.embedding.android.FlutterActivity;
+
 
 public class MineFragment extends BaseFragment<MineViewModel, FragmentMineBinding> {
 
@@ -45,6 +47,12 @@ public class MineFragment extends BaseFragment<MineViewModel, FragmentMineBindin
         });
         final TextView userNameText = binding.profileName;
         final TextView coinCountText = binding.userCoinCount;
+        coinCountText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(FlutterActivity.withNewEngine().initialRoute("/coin_rank").build(requireContext()));
+            }
+        });
         viewModel.getMessageCountLiveData().observe(getViewLifecycleOwner(), new Observer<NetworkModel<Integer>>() {
             @Override
             public void onChanged(NetworkModel<Integer> integerNetworkModel) {
@@ -55,7 +63,7 @@ public class MineFragment extends BaseFragment<MineViewModel, FragmentMineBindin
         viewModel.getLoginInfo().observe(getViewLifecycleOwner(), loginVo -> {
             if (loginVo != null) {
                 userNameText.setText(loginVo.getUsername());
-                coinCountText.setText(String.format(Locale.getDefault(), "金币数量: %d", loginVo.getCoinCount()));
+                coinCountText.setText(String.format(Locale.getDefault(), "当前积分: %d", loginVo.getCoinCount()));
             } else {
                 userNameText.setText("未登录");
                 coinCountText.setVisibility(View.GONE);

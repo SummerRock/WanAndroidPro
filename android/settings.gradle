@@ -3,5 +3,11 @@ include ':app', ':commonmodule'
 include ':monitor'
 includeBuild('../../WanAndroidPro/node_modules/@react-native/gradle-plugin')
 
+setBinding(new Binding([gradle: this]))                                // new
+evaluate(new File(                                                     // new
+        settingsDir.parentFile,                                            // new
+        'android/flutter_module/.android/include_flutter.groovy'                   // new
+))
+
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 include ':react'

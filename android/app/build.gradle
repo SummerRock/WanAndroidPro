@@ -109,6 +109,7 @@ dependencies { // 项目需要的依赖
     implementation project(path: ':commonmodule')
     implementation project(path: ':monitor')
     implementation project(path: ':react')
+    implementation project(':flutter')
 
     /** 上拉刷新、下拉加载 **/
     implementation('com.scwang.smartrefresh:SmartRefreshLayout:1.1.0')
