@@ -11,12 +11,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class NetworkModulePackage implements ReactPackage {
+public class DefaultModulePackage implements ReactPackage {
     @NonNull
     @Override
     public List<NativeModule> createNativeModules(@NonNull ReactApplicationContext reactApplicationContext) {
         List<NativeModule> modules = new ArrayList<>();
         modules.add(new NetworkNativeModule(reactApplicationContext));
+        modules.add(new CloseActivityModule(reactApplicationContext));
         return modules;
     }
 

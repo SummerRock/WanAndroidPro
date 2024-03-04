@@ -19,7 +19,7 @@ import com.common.storage.MMKVHelper;
 import com.example.monitor.AppLifecycleListener;
 import com.example.myapplication.base.login.LoginManager;
 import com.example.myapplication.main.MainActivityV2;
-import com.example.react.module.NetworkModulePackage;
+import com.example.react.module.DefaultModulePackage;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
@@ -43,7 +43,7 @@ public class BaseApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             List<ReactPackage> packages = new PackageList(this).getPackages();
             // Packages that cannot be autolinked yet can be added manually here
-            packages.add(new NetworkModulePackage());
+            packages.add(new DefaultModulePackage());
             return packages;
         }
     };
