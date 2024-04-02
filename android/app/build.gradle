@@ -60,6 +60,10 @@ android { // 配置 android gradle plugin 需要的内容
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
+        profile {
+            initWith debug
+        }
+
         release {
             minifyEnabled true
             signingConfig signingConfigs.release
@@ -72,6 +76,16 @@ android { // 配置 android gradle plugin 需要的内容
     }
     namespace 'com.example.myapplication'
 
+    String storageUrl = System.env.FLUTTER_STORAGE_BASE_URL ?: "https://storage.googleapis.com"
+    repositories {
+        maven {
+            url '../flutter_module/build/host/outputs/repo'
+            // /Users/apple/workplace/my_own/WanAndroidPro/android/flutter_module/build/host/outputs/repo
+        }
+        maven {
+            url "$storageUrl/download.flutter.io"
+        }
+    }
 }
 
 dependencies { // 项目需要的依赖
@@ -109,7 +123,10 @@ dependencies { // 项目需要的依赖
     implementation project(path: ':commonmodule')
     implementation project(path: ':monitor')
     implementation project(path: ':react')
-    implementation project(':flutter')
+//    implementation project(':flutter')
+    debugImplementation 'com.example.play.flutter_module:flutter_debug:1.0'
+    profileImplementation 'com.example.play.flutter_module:flutter_profile:1.0'
+    releaseImplementation 'com.example.play.flutter_module:flutter_release:1.0'
 
     /** 上拉刷新、下拉加载 **/
     implementation('com.scwang.smartrefresh:SmartRefreshLayout:1.1.0')
