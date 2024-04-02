@@ -21,9 +21,7 @@ class DashboardFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        val viewModel = ViewModelProvider(this).get(
-            DashboardViewModel::class.java
-        )
+        val viewModel = ViewModelProvider(this)[DashboardViewModel::class.java]
         binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding!!.getRoot()
         val textView = binding!!.textDashboard
@@ -54,9 +52,9 @@ class DashboardFragment : Fragment() {
         }
     }
 
-    suspend fun ioCode1() {
+    private suspend fun ioCode1() {
         withContext(Dispatchers.IO) {
-            LogUtils.v("");
+            LogUtils.v("io opera 1");
         }
     }
 
