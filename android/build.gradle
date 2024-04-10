@@ -3,7 +3,7 @@ apply plugin: 'com.alibaba.arouter'
 
 buildscript { // 配置脚本的 classpath
 
-    ext.kotlin_version = '1.6.21' // 替换成你希望使用的 Kotlin 版本
+    ext.kotlin_version = '1.7.10' // 替换成你希望使用的 Kotlin 版本
     repositories { // 项目的仓库地址，会按顺序依次查找
         google()
         jcenter()
@@ -12,6 +12,7 @@ buildscript { // 配置脚本的 classpath
     dependencies { // 项目的依赖
         classpath 'com.android.tools.build:gradle:8.0.1'
         classpath "com.alibaba:arouter-register:1.0.2"
+        // classpath 'com.archinamon:android-gradle-aspectj:4.3.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         classpath("com.facebook.react:react-native-gradle-plugin")
