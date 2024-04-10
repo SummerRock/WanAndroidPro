@@ -1,8 +1,11 @@
-apply plugin: 'com.android.application' // 引入 android gradle 插件
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
+plugins {
+    id 'com.android.application'
+    // id 'com.archinamon.aspectj'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'com.facebook.react'
+}
 apply from: this.project.file('../config.gradle')
-apply plugin: "com.facebook.react"
 
 android { // 配置 android gradle plugin 需要的内容
     compileSdkVersion this.project.ext.compileSdkVersion
